@@ -1,0 +1,3 @@
+[submodule "submodules/RemoteProtocolBridge"]
+	path = submodules/RemoteProtocolBridge
+	url = https://github.com/ChristianAhrens/RemoteProtocolBridge

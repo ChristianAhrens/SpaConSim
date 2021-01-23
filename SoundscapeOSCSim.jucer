@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="MFvkL5" name="SoundscapeOSCSim" projectType="guiapp" version="0.1.0"
+              bundleIdentifier="com.ChristianAhrens.SoundscapeOSCSim" companyName="Christian Ahrens"
+              companyEmail="christianahrens@me.com" displaySplashScreen="0"
+              reportAppUsage="0" companyCopyright="2021" jucerFormatVersion="1"
+              headerPath="../../submodules/RemoteProtocolBridge/Source;&#10;../../submodules/RemoteProtocolBridge/submodules/JUCE-AppBasics/Source;"
+              companyWebsite="https://github.com/ChristianAhrens/SoundscapeOSCSim">
+  <MAINGROUP id="cS7SrP" name="SoundscapeOSCSim">
+    <GROUP id="{DA3507CD-D9BE-4153-5873-D44DBA9EAF0C}" name="Resources">
+      <GROUP id="{864A9574-56E7-F9A8-38E9-07000EF2A9EC}" name="Images">
+        <FILE id="kpe1tk" name="SoundscapeOSCSim.png" compile="0" resource="1"
+              file="Resources/Images/SoundscapeOSCSim.png"/>
+        <FILE id="r2gmrr" name="SoundscapeOSCSim.xcf" compile="0" resource="0"
+              file="Resources/Images/SoundscapeOSCSim.xcf"/>
+        <FILE id="tEZIJj" name="SoundscapeOSCSimCanvas.png" compile="0" resource="1"
+              file="Resources/Images/SoundscapeOSCSimCanvas.png"/>
+        <FILE id="dvNofY" name="SoundscapeOSCSimRect.png" compile="0" resource="1"
+              file="Resources/Images/SoundscapeOSCSimRect.png"/>
+      </GROUP>
+      <FILE id="kQ4YKb" name="LICENSE" compile="0" resource="1" file="LICENSE"/>
+      <FILE id="Q7vthe" name="README.md" compile="0" resource="1" file="README.md"/>
+    </GROUP>
+    <GROUP id="{2B9DD386-1093-ADF5-E47F-5954774132B5}" name="Source">
+      <FILE id="zk9Nsy" name="MainSoundscapeOSCSimComponent.cpp" compile="1"
+            resource="0" file="Source/MainSoundscapeOSCSimComponent.cpp"/>
+      <FILE id="s55Ijc" name="MainSoundscapeOSCSimComponent.h" compile="0"
+            resource="0" file="Source/MainSoundscapeOSCSimComponent.h"/>
+      <FILE id="vQ5W43" name="ProtocolBridgingWrapper.cpp" compile="1" resource="0"
+            file="Source/ProtocolBridgingWrapper.cpp"/>
+      <FILE id="HbiWnW" name="ProtocolBridgingWrapper.h" compile="0" resource="0"
+            file="Source/ProtocolBridgingWrapper.h"/>
+      <FILE id="g0nbLB" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
+    </GROUP>
+    <GROUP id="{F93FDF74-FF39-A47E-E403-31E5ADA7ADD3}" name="submodules">
+      <GROUP id="{5D1CEB5A-DB08-BAC9-EF17-843234394AA4}" name="RemoteProtocolBridge">
+        <GROUP id="{670D4340-A362-9D5C-AF53-FA5BF9A0FF01}" name="submodules">
+          <GROUP id="{9E885CEA-FC04-D3CB-BA60-D893D47DAB54}" name="JUCE-AppBasics">
+            <GROUP id="{4E116AF5-77F2-F9AB-B9E2-7061C5790FB5}" name="Source">
+              <FILE id="jEEI5R" name="AppConfigurationBase.cpp" compile="1" resource="0"
+                    file="submodules/RemoteProtocolBridge/submodules/JUCE-AppBasics/Source/AppConfigurationBase.cpp"/>
+              <FILE id="f3V2EF" name="AppConfigurationBase.h" compile="0" resource="0"
+                    file="submodules/RemoteProtocolBridge/submodules/JUCE-AppBasics/Source/AppConfigurationBase.h"/>
+              <FILE id="kJoMjt" name="Image_utils.cpp" compile="1" resource="0" file="submodules/RemoteProtocolBridge/submodules/JUCE-AppBasics/Source/Image_utils.cpp"/>
+              <FILE id="MbVyYh" name="Image_utils.h" compile="0" resource="0" file="submodules/RemoteProtocolBridge/submodules/JUCE-AppBasics/Source/Image_utils.h"/>
+              <FILE id="cvDq4n" name="iOS_utils.cpp" compile="1" resource="0" file="submodules/RemoteProtocolBridge/submodules/JUCE-AppBasics/Source/iOS_utils.cpp"/>
+              <FILE id="NgYNrw" name="iOS_utils.h" compile="0" resource="0" file="submodules/RemoteProtocolBridge/submodules/JUCE-AppBasics/Source/iOS_utils.h"/>
+            </GROUP>
+          </GROUP>
+        </GROUP>
+        <GROUP id="{101B7526-C17E-A526-9CCF-9B16385E1D4F}" name="Source">
+          <GROUP id="{7BEDE2E7-D445-0646-3278-7EE2B5985D06}" name="ProcessingEngine">
+            <GROUP id="{E942E9CB-791F-AAD7-FE92-FD5DE9A476C6}" name="ObjectDataHandling">
+              <GROUP id="{6BAD5C54-D33E-31CF-9892-F0E9A116C1D1}" name="DS100_DeviceSimulation">
+                <FILE id="PrHWGy" name="DS100_DeviceSimulation.cpp" compile="1" resource="0"
+                      file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ObjectDataHandling/DS100_DeviceSimulation/DS100_DeviceSimulation.cpp"/>
+                <FILE id="ULAeYh" name="DS100_DeviceSimulation.h" compile="0" resource="0"
+                      file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ObjectDataHandling/DS100_DeviceSimulation/DS100_DeviceSimulation.h"/>
+              </GROUP>
+              <GROUP id="{4763A710-60D6-FBB9-1793-F5A62079B3A3}" name="BypassHandling">
+                <FILE id="sj6AUt" name="BypassHandling.cpp" compile="1" resource="0"
+                      file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ObjectDataHandling/BypassHandling/BypassHandling.cpp"/>
+                <FILE id="UlGRkP" name="BypassHandling.h" compile="0" resource="0"
+                      file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ObjectDataHandling/BypassHandling/BypassHandling.h"/>
+              </GROUP>
+              <GROUP id="{D8A17B4F-82E7-B66C-70B3-4636A0FEF214}" name="Forward_A_to_B_only">
+                <FILE id="irdCSn" name="Forward_A_to_B_only.cpp" compile="1" resource="0"
+                      file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ObjectDataHandling/Forward_A_to_B_only/Forward_A_to_B_only.cpp"/>
+                <FILE id="e5iYJD" name="Forward_A_to_B_only.h" compile="0" resource="0"
+                      file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ObjectDataHandling/Forward_A_to_B_only/Forward_A_to_B_only.h"/>
+              </GROUP>
+              <GROUP id="{1CFC2764-7CD3-FDE8-6446-17521EC9D7B3}" name="Mux_nA_to_mB">
+                <FILE id="eAjONt" name="Mux_nA_to_mB.cpp" compile="1" resource="0"
+                      file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ObjectDataHandling/Mux_nA_to_mB/Mux_nA_to_mB.cpp"/>
+                <FILE id="Ji4hBj" name="Mux_nA_to_mB.h" compile="0" resource="0" file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ObjectDataHandling/Mux_nA_to_mB/Mux_nA_to_mB.h"/>
+              </GROUP>
+              <GROUP id="{DFF248C1-517A-8C30-D0D3-AC6E6B51015D}" name="Forward_only_valueChanges">
+                <FILE id="xO6B8Q" name="Forward_only_valueChanges.cpp" compile="1"
+                      resource="0" file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ObjectDataHandling/Forward_only_valueChanges/Forward_only_valueChanges.cpp"/>
+                <FILE id="hOkzZg" name="Forward_only_valueChanges.h" compile="0" resource="0"
+                      file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ObjectDataHandling/Forward_only_valueChanges/Forward_only_valueChanges.h"/>
+              </GROUP>
+              <GROUP id="{050FCD8E-7C8D-5210-90E3-D08F7F7E1EDC}" name="Mux_nA_to_mB_withValFilter">
+                <FILE id="nGoJRX" name="Mux_nA_to_mB_withValFilter.cpp" compile="1"
+                      resource="0" file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ObjectDataHandling/Mux_nA_to_mB_withValFilter/Mux_nA_to_mB_withValFilter.cpp"/>
+                <FILE id="zXy8d8" name="Mux_nA_to_mB_withValFilter.h" compile="0" resource="0"
+                      file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ObjectDataHandling/Mux_nA_to_mB_withValFilter/Mux_nA_to_mB_withValFilter.h"/>
+              </GROUP>
+              <GROUP id="{51D200C2-A127-BD65-42DC-513062B8E3B8}" name="Reverse_B_to_A_only">
+                <FILE id="yW0svJ" name="Reverse_B_to_A_only.cpp" compile="1" resource="0"
+                      file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ObjectDataHandling/Reverse_B_to_A_only/Reverse_B_to_A_only.cpp"/>
+                <FILE id="Yk6kpi" name="Reverse_B_to_A_only.h" compile="0" resource="0"
+                      file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ObjectDataHandling/Reverse_B_to_A_only/Reverse_B_to_A_only.h"/>
+              </GROUP>
+              <GROUP id="{EB5C130E-19B6-07FF-9D80-E29A73BEE605}" name="Remap_A_X_Y_to_B_XY_Handling">
+                <FILE id="FnbSXf" name="Remap_A_X_Y_to_B_XY_Handling.cpp" compile="1"
+                      resource="0" file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ObjectDataHandling/Remap_A_X_Y_to_B_XY_Handling/Remap_A_X_Y_to_B_XY_Handling.cpp"/>
+                <FILE id="TMW0zu" name="Remap_A_X_Y_to_B_XY_Handling.h" compile="0"
+                      resource="0" file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ObjectDataHandling/Remap_A_X_Y_to_B_XY_Handling/Remap_A_X_Y_to_B_XY_Handling.h"/>
+              </GROUP>
+              <FILE id="Ej0n3G" name="ObjectDataHandling_Abstract.cpp" compile="1"
+                    resource="0" file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ObjectDataHandling/ObjectDataHandling_Abstract.cpp"/>
+              <FILE id="lm37CX" name="ObjectDataHandling_Abstract.h" compile="0"
+                    resource="0" file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ObjectDataHandling/ObjectDataHandling_Abstract.h"/>
+            </GROUP>
+            <GROUP id="{E292F700-4771-1C08-BDE9-01EF568EF5F4}" name="ProtocolProcessor">
+              <GROUP id="{F616B12E-274D-D22B-17A2-A337F0BB54E6}" name="OcaProtocolProcessor">
+                <FILE id="eIk3CL" name="OCAProtocolProcessor.cpp" compile="1" resource="0"
+                      file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/OcaProtocolProcessor/OCAProtocolProcessor.cpp"/>
+                <FILE id="qGqYYe" name="OCAProtocolProcessor.h" compile="0" resource="0"
+                      file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/OcaProtocolProcessor/OCAProtocolProcessor.h"/>
+              </GROUP>
+              <GROUP id="{00BE0A88-F10E-9B47-129C-ADB05689D18A}" name="MIDIProtocolProcessor">
+                <FILE id="JWPkCn" name="MIDIProtocolProcessor.cpp" compile="1" resource="0"
+                      file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/MIDIProtocolProcessor/MIDIProtocolProcessor.cpp"/>
+                <FILE id="T4OTET" name="MIDIProtocolProcessor.h" compile="0" resource="0"
+                      file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/MIDIProtocolProcessor/MIDIProtocolProcessor.h"/>
+              </GROUP>
+              <GROUP id="{F600D5DB-290B-36B6-BBA2-67CD1223D644}" name="RTTrPMProtocolProcessor">
+                <GROUP id="{872E9033-424C-A01D-073D-163BA3EDD827}" name="RTTrPMReceiver">
+                  <GROUP id="{FC51B1FE-2F84-7698-E957-B13078E44B5C}" name="Modules">
+                    <FILE id="Mzw6Wg" name="CentroidAAVModule.cpp" compile="1" resource="0"
+                          file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/RTTrPMProtocolProcessor/RTTrPMReceiver/Modules/CentroidAAVModule.cpp"/>
+                    <FILE id="wtvyyD" name="CentroidAAVModule.h" compile="0" resource="0"
+                          file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/RTTrPMProtocolProcessor/RTTrPMReceiver/Modules/CentroidAAVModule.h"/>
+                    <FILE id="hJi1ZA" name="CentroidPositionModule.cpp" compile="1" resource="0"
+                          file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/RTTrPMProtocolProcessor/RTTrPMReceiver/Modules/CentroidPositionModule.cpp"/>
+                    <FILE id="Vnc9jj" name="CentroidPositionModule.h" compile="0" resource="0"
+                          file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/RTTrPMProtocolProcessor/RTTrPMReceiver/Modules/CentroidPositionModule.h"/>
+                    <FILE id="ymo0PF" name="OrientationEulerModule.cpp" compile="1" resource="0"
+                          file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/RTTrPMProtocolProcessor/RTTrPMReceiver/Modules/OrientationEulerModule.cpp"/>
+                    <FILE id="kU3REP" name="OrientationEulerModule.h" compile="0" resource="0"
+                          file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/RTTrPMProtocolProcessor/RTTrPMReceiver/Modules/OrientationEulerModule.h"/>
+                    <FILE id="sgaqN4" name="OrientationQuaternModule.cpp" compile="1" resource="0"
+                          file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/RTTrPMProtocolProcessor/RTTrPMReceiver/Modules/OrientationQuaternModule.cpp"/>
+                    <FILE id="KqPpH6" name="OrientationQuaternModule.h" compile="0" resource="0"
+                          file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/RTTrPMProtocolProcessor/RTTrPMReceiver/Modules/OrientationQuaternModule.h"/>
+                    <FILE id="QvB0zR" name="PacketModule.cpp" compile="1" resource="0"
+                          file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/RTTrPMProtocolProcessor/RTTrPMReceiver/Modules/PacketModule.cpp"/>
+                    <FILE id="JCalhk" name="PacketModule.h" compile="0" resource="0" file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/RTTrPMProtocolProcessor/RTTrPMReceiver/Modules/PacketModule.h"/>
+                    <FILE id="xseAt3" name="PacketModules.h" compile="0" resource="0" file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/RTTrPMProtocolProcessor/RTTrPMReceiver/Modules/PacketModules.h"/>
+                    <FILE id="rnwTU1" name="PacketModuleTrackable.cpp" compile="1" resource="0"
+                          file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/RTTrPMProtocolProcessor/RTTrPMReceiver/Modules/PacketModuleTrackable.cpp"/>
+                    <FILE id="SIcW75" name="PacketModuleTrackable.h" compile="0" resource="0"
+                          file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/RTTrPMProtocolProcessor/RTTrPMReceiver/Modules/PacketModuleTrackable.h"/>
+                    <FILE id="K6Gy1x" name="RTTrPMHeader.cpp" compile="1" resource="0"
+                          file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/RTTrPMProtocolProcessor/RTTrPMReceiver/Modules/RTTrPMHeader.cpp"/>
+                    <FILE id="GGo64O" name="RTTrPMHeader.h" compile="0" resource="0" file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/RTTrPMProtocolProcessor/RTTrPMReceiver/Modules/RTTrPMHeader.h"/>
+                    <FILE id="P3w0G6" name="TrackedPointAAVModule.cpp" compile="1" resource="0"
+                          file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/RTTrPMProtocolProcessor/RTTrPMReceiver/Modules/TrackedPointAAVModule.cpp"/>
+                    <FILE id="u2Q9Ul" name="TrackedPointAAVModule.h" compile="0" resource="0"
+                          file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/RTTrPMProtocolProcessor/RTTrPMReceiver/Modules/TrackedPointAAVModule.h"/>
+                    <FILE id="MSjjuR" name="TrackedPointPosModule.cpp" compile="1" resource="0"
+                          file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/RTTrPMProtocolProcessor/RTTrPMReceiver/Modules/TrackedPointPosModule.cpp"/>
+                    <FILE id="Hc1Ra9" name="TrackedPointPosModule.h" compile="0" resource="0"
+                          file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/RTTrPMProtocolProcessor/RTTrPMReceiver/Modules/TrackedPointPosModule.h"/>
+                    <FILE id="hRsaCJ" name="ZoneCollisionDetectModule.cpp" compile="1"
+                          resource="0" file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/RTTrPMProtocolProcessor/RTTrPMReceiver/Modules/ZoneCollisionDetectModule.cpp"/>
+                    <FILE id="wT12lW" name="ZoneCollisionDetectModule.h" compile="0" resource="0"
+                          file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/RTTrPMProtocolProcessor/RTTrPMReceiver/Modules/ZoneCollisionDetectModule.h"/>
+                  </GROUP>
+                  <FILE id="pmxoI4" name="RTTrPMReceiver.cpp" compile="1" resource="0"
+                        file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/RTTrPMProtocolProcessor/RTTrPMReceiver/RTTrPMReceiver.cpp"/>
+                  <FILE id="QPenor" name="RTTrPMReceiver.h" compile="0" resource="0"
+                        file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/RTTrPMProtocolProcessor/RTTrPMReceiver/RTTrPMReceiver.h"/>
+                </GROUP>
+                <FILE id="qJv2ip" name="RTTrPMProtocolProcessor.cpp" compile="1" resource="0"
+                      file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/RTTrPMProtocolProcessor/RTTrPMProtocolProcessor.cpp"/>
+                <FILE id="a9WNL0" name="RTTrPMProtocolProcessor.h" compile="0" resource="0"
+                      file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/RTTrPMProtocolProcessor/RTTrPMProtocolProcessor.h"/>
+              </GROUP>
+              <FILE id="audzDs" name="NetworkProtocolProcessorBase.cpp" compile="1"
+                    resource="0" file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/NetworkProtocolProcessorBase.cpp"/>
+              <FILE id="VkRZoi" name="NetworkProtocolProcessorBase.h" compile="0"
+                    resource="0" file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/NetworkProtocolProcessorBase.h"/>
+              <FILE id="TEN9tx" name="ProtocolProcessorBase.cpp" compile="1" resource="0"
+                    file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/ProtocolProcessorBase.cpp"/>
+              <FILE id="gxRmMM" name="ProtocolProcessorBase.h" compile="0" resource="0"
+                    file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/ProtocolProcessorBase.h"/>
+              <GROUP id="{0897BD76-991F-F530-320F-B55D3A67F2FD}" name="OSCProtocolProcessor">
+                <FILE id="FqILmm" name="OSCProtocolProcessor.cpp" compile="1" resource="0"
+                      file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/OSCProtocolProcessor/OSCProtocolProcessor.cpp"/>
+                <FILE id="EKwuLB" name="OSCProtocolProcessor.h" compile="0" resource="0"
+                      file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/OSCProtocolProcessor/OSCProtocolProcessor.h"/>
+                <FILE id="gQY7iU" name="SenderAwareOSCReceiver.cpp" compile="1" resource="0"
+                      file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/OSCProtocolProcessor/SenderAwareOSCReceiver.cpp"/>
+                <FILE id="H3sAQf" name="SenderAwareOSCReceiver.h" compile="0" resource="0"
+                      file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/OSCProtocolProcessor/SenderAwareOSCReceiver.h"/>
+                <FILE id="B01NgG" name="YmhOSCProtocolProcessor.cpp" compile="1" resource="0"
+                      file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/OSCProtocolProcessor/YmhOSCProtocolProcessor.cpp"/>
+                <FILE id="wkMUTl" name="YmhOSCProtocolProcessor.h" compile="0" resource="0"
+                      file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProtocolProcessor/OSCProtocolProcessor/YmhOSCProtocolProcessor.h"/>
+              </GROUP>
+            </GROUP>
+            <FILE id="B0REQz" name="ProcessingEngineConfig.cpp" compile="1" resource="0"
+                  file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProcessingEngineConfig.cpp"/>
+            <FILE id="B0Y23H" name="ProcessingEngineConfig.h" compile="0" resource="0"
+                  file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProcessingEngineConfig.h"/>
+            <FILE id="COthVK" name="ProcessingEngineNode.cpp" compile="1" resource="0"
+                  file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProcessingEngineNode.cpp"/>
+            <FILE id="J8arXS" name="ProcessingEngineNode.h" compile="0" resource="0"
+                  file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/ProcessingEngineNode.h"/>
+            <FILE id="tFXC1Y" name="TimerThreadBase.cpp" compile="1" resource="0"
+                  file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/TimerThreadBase.cpp"/>
+            <FILE id="agKWo8" name="TimerThreadBase.h" compile="0" resource="0"
+                  file="submodules/RemoteProtocolBridge/Source/ProcessingEngine/TimerThreadBase.h"/>
+          </GROUP>
+          <FILE id="TePn3T" name="RemoteProtocolBridgeCommon.h" compile="0" resource="0"
+                file="submodules/RemoteProtocolBridge/Source/RemoteProtocolBridgeCommon.h"/>
+        </GROUP>
+      </GROUP>
+    </GROUP>
+  </MAINGROUP>
+  <EXPORTFORMATS>
+    <VS2019 targetFolder="Builds/VisualStudio2019" smallIcon="kpe1tk" bigIcon="kpe1tk">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug"/>
+        <CONFIGURATION isDebug="0" name="Release"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_osc"/>
+        <MODULEPATH id="juce_opengl"/>
+        <MODULEPATH id="juce_gui_extra"/>
+        <MODULEPATH id="juce_gui_basics"/>
+        <MODULEPATH id="juce_graphics"/>
+        <MODULEPATH id="juce_events"/>
+        <MODULEPATH id="juce_data_structures"/>
+        <MODULEPATH id="juce_core"/>
+        <MODULEPATH id="juce_audio_processors"/>
+        <MODULEPATH id="juce_audio_basics"/>
+        <MODULEPATH id="juce_audio_devices" path="../../../../../../JUCE/modules"/>
+      </MODULEPATHS>
+    </VS2019>
+    <XCODE_MAC targetFolder="Builds/MacOSX" smallIcon="dvNofY" bigIcon="dvNofY"
+               hardenedRuntime="1" appSandbox="1" appSandboxOptions="com.apple.security.device.bluetooth,com.apple.security.device.usb,com.apple.security.files.downloads.read-write,com.apple.security.files.user-selected.read-write,com.apple.security.network.client,com.apple.security.network.server,com.apple.security.temporary-exception.files.home-relative-path.read-write">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug"/>
+        <CONFIGURATION isDebug="0" name="Release"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_osc"/>
+        <MODULEPATH id="juce_opengl"/>
+        <MODULEPATH id="juce_gui_extra"/>
+        <MODULEPATH id="juce_gui_basics"/>
+        <MODULEPATH id="juce_graphics"/>
+        <MODULEPATH id="juce_events"/>
+        <MODULEPATH id="juce_data_structures"/>
+        <MODULEPATH id="juce_core"/>
+        <MODULEPATH id="juce_audio_processors"/>
+        <MODULEPATH id="juce_audio_basics"/>
+        <MODULEPATH id="juce_audio_devices" path="../../../../../../JUCE/modules"/>
+      </MODULEPATHS>
+    </XCODE_MAC>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_osc" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+  </MODULES>
+  <JUCEOPTIONS JUCE_QUICKTIME="disabled" JUCE_PLUGINHOST_VST="0" JUCE_PLUGINHOST_AU="0"
+               JUCE_WASAPI="0" JUCE_ASIO="0" JUCE_USE_WINRT_MIDI="0" JUCE_WASAPI_EXCLUSIVE="0"
+               JUCE_DIRECTSOUND="0" JUCE_ALSA="0" JUCE_JACK="0" JUCE_BELA="0"
+               JUCE_USE_ANDROID_OBOE="0" JUCE_USE_ANDROID_OPENSLES="0" JUCE_DISABLE_AUDIO_MIXING_WITH_OTHER_APPS="0"
+               JUCE_USE_FLAC="0" JUCE_USE_OGGVORBIS="0" JUCE_USE_MP3AUDIOFORMAT="0"
+               JUCE_USE_LAME_AUDIO_FORMAT="0" JUCE_USE_WINDOWS_MEDIA_FORMAT="0"
+               JUCE_VST3_CAN_REPLACE_VST2="0" JUCE_FORCE_USE_LEGACY_PARAM_IDS="0"
+               JUCE_FORCE_LEGACY_PARAMETER_AUTOMATION_TYPE="0" JUCE_USE_STUDIO_ONE_COMPATIBLE_PARAMETERS="1"
+               JUCE_STANDALONE_FILTER_WINDOW_USE_KIOSK_MODE="0" JUCE_PLUGINHOST_VST3="0"/>
+  <LIVE_SETTINGS>
+    <WINDOWS buildEnabled="1"/>
+    <OSX/>
+  </LIVE_SETTINGS>
+</JUCERPROJECT>
