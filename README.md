@@ -1,7 +1,20 @@
-# SoundscapeOSCSim
-![SoundscapeOSCSim Logo](/Resources/Images/SoundscapeOSCSim.png)
+![Showreel.001.png](Resources/Documentation/Showreel/Showreel.001.png "SoundscapeOSCSim Headline Icons")
 
-## This a minimal tool to simulate a d&b audiotechnik DS100 Soundscape Processor
+SoundscapeOSCSim is a minimal tool to simulate the OSC message response behaviour of a d&b audiotechnik DS100 Soundscape signal bridge and is designed to help developing and testing of 3rd party software tools. 
+See [LATEST RELEASE](../../releases/latest) for available binary packages.
 
-It utilizes a RemoteProtocolBridge processing node with fixed parametrization for core functionality.
-See https://github.com/ChristianAhrens/RemoteProtocolBridge for details.
+![Showreel.002.png](Resources/Documentation/Showreel/Showreel.002.png "SoundscapeOSCSim commented screenshot")
+
+SoundscapeOSCSim currently supports simulation of 64 or 128 channels for simulation and only one or all 4 mapping areas per object.
+
+The following objects are simulated:
+- Mapped Sound Object Position XY
+- Mapped Sound Object Position X
+- Mapped Sound Object Position Y
+- Matrix Input ReverbSendGain
+- Sound Object Spread
+- Sound Object Delay Mode
+
+The UI allows adjusting of simulation update interval in milliseconds. Practically speaking, this parameter influences the object value change speed.
+
+SoundscapeOSCSim announces its OSC capabilities as zeroconf service via Servus API. The implementation currently only works on systems with already running dnssd service (macOS, iOS).
