@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="MFvkL5" name="SoundscapeOSCSim" projectType="guiapp" version="0.1.1"
+<JUCERPROJECT id="MFvkL5" name="SoundscapeOSCSim" projectType="guiapp" version="0.1.2"
               bundleIdentifier="com.ChristianAhrens.SoundscapeOSCSim" companyName="Christian Ahrens"
               companyEmail="christianahrens@me.com" displaySplashScreen="0"
               reportAppUsage="0" companyCopyright="2021" jucerFormatVersion="1"
@@ -8,6 +8,12 @@
               companyWebsite="https://github.com/ChristianAhrens/SoundscapeOSCSim">
   <MAINGROUP id="cS7SrP" name="SoundscapeOSCSim">
     <GROUP id="{DA3507CD-D9BE-4153-5873-D44DBA9EAF0C}" name="Resources">
+      <GROUP id="{620F3BAA-2D31-BBC0-F72D-E488D90A0667}" name="Documentation">
+        <FILE id="WyVqZ3" name="Showreel.001.png" compile="0" resource="1"
+              file="Resources/Documentation/Showreel/Showreel.001.png"/>
+        <FILE id="nNdxr6" name="Showreel.002.png" compile="0" resource="1"
+              file="Resources/Documentation/Showreel/Showreel.002.png"/>
+      </GROUP>
       <GROUP id="{864A9574-56E7-F9A8-38E9-07000EF2A9EC}" name="Images">
         <FILE id="kpe1tk" name="SoundscapeOSCSim.png" compile="0" resource="1"
               file="Resources/Images/SoundscapeOSCSim.png"/>
