@@ -32,8 +32,7 @@ namespace SoundscapeOSCSim
 class MainSoundscapeOSCSimComponent :   public juce::Component,
                                         public ProtocolBridgingWrapper::Listener,
                                         public Slider::Listener,
-                                        public TextEditor::Listener,
-                                        public TextEditor::InputFilter,
+                                        public ComboBox::Listener,
                                         public Timer
 {
 public:
@@ -51,8 +50,7 @@ public:
     void sliderValueChanged(Slider* slider) override;
     
     //==========================================================================
-    void textEditorTextChanged (TextEditor&) override;
-    String filterNewText (TextEditor&, const String& newInput) override;
+    void comboBoxChanged (ComboBox* comboBox) override;
 
     //==========================================================================
     void timerCallback() override;
@@ -61,11 +59,11 @@ private:
     std::unique_ptr<Label>      m_speedSliderLabel;
     std::unique_ptr<Slider>     m_speedSlider;
     
-    std::unique_ptr<Label>      m_channelSimEditLabel;
-    std::unique_ptr<TextEditor> m_channelSimEdit;
+    std::unique_ptr<Label>      m_channelSimSelectLabel;
+    std::unique_ptr<ComboBox>   m_channelSimSelect;
     
-    std::unique_ptr<Label>      m_recordSimEditLabel;
-    std::unique_ptr<TextEditor> m_recordSimEdit;
+    std::unique_ptr<Label>      m_recordSimSelectLabel;
+    std::unique_ptr<ComboBox>   m_recordSimSelect;
     
     std::unique_ptr<Slider>     m_performanceMeter;
 

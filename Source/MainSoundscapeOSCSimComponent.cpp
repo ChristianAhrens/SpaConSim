@@ -35,23 +35,23 @@ MainSoundscapeOSCSimComponent::MainSoundscapeOSCSimComponent()
     m_speedSliderLabel->attachToComponent(m_speedSlider.get(), false);
     addAndMakeVisible(m_speedSliderLabel.get());
     
-    m_channelSimEdit  = std::make_unique<TextEditor>();
-    m_channelSimEdit->setInputFilter(this, false);
-    m_channelSimEdit->setText("64");
-    m_channelSimEdit->addListener(this);
-    addAndMakeVisible(m_channelSimEdit.get());
-    m_channelSimEditLabel = std::make_unique<Label>("channelSimSliderLabel", "Simulated channel count");
-    m_channelSimEditLabel->attachToComponent(m_channelSimEdit.get(), false);
-    addAndMakeVisible(m_channelSimEditLabel.get());
+    m_channelSimSelect  = std::make_unique<ComboBox>();
+    m_channelSimSelect->addItemList(StringArray{"32", "64", "128"}, 1);
+    m_channelSimSelect->addListener(this);
+    m_channelSimSelect->setSelectedId(1);
+    addAndMakeVisible(m_channelSimSelect.get());
+    m_channelSimSelectLabel = std::make_unique<Label>("channelSimSelectLabel", "Simulated channel count");
+    m_channelSimSelectLabel->attachToComponent(m_channelSimSelect.get(), false);
+    addAndMakeVisible(m_channelSimSelectLabel.get());
     
-    m_recordSimEdit  = std::make_unique<TextEditor>();
-    m_recordSimEdit->setInputFilter(this, false);
-    m_recordSimEdit->setText("1");
-    m_recordSimEdit->addListener(this);
-    addAndMakeVisible(m_recordSimEdit.get());
-    m_recordSimEditLabel = std::make_unique<Label>("recordSimSliderLabel", "Simulated record count");
-    m_recordSimEditLabel->attachToComponent(m_recordSimEdit.get(), false);
-    addAndMakeVisible(m_recordSimEditLabel.get());
+    m_recordSimSelect  = std::make_unique<ComboBox>();
+    m_recordSimSelect->addItemList(StringArray{"1", "4"}, 1);
+    m_recordSimSelect->addListener(this);
+    m_recordSimSelect->setSelectedId(1);
+    addAndMakeVisible(m_recordSimSelect.get());
+    m_recordSimSelectLabel = std::make_unique<Label>("recordSimSelectLabel", "Simulated record count");
+    m_recordSimSelectLabel->attachToComponent(m_recordSimSelect.get(), false);
+    addAndMakeVisible(m_recordSimSelectLabel.get());
     
     m_performanceMeter = std::make_unique<Slider>(Slider::LinearBar, Slider::TextBoxAbove);
     m_performanceMeter->setRange(0, 1, 1);
@@ -88,8 +88,8 @@ void MainSoundscapeOSCSimComponent::resized()
     
     bounds.removeFromTop(rowHeight);
     auto editorBounds = bounds.removeFromTop(rowHeight);
-    m_channelSimEdit->setBounds(editorBounds.removeFromLeft(0.5f * bounds.getWidth() - 5));
-    m_recordSimEdit->setBounds(editorBounds.removeFromRight(0.5f * bounds.getWidth() - 5));
+    m_channelSimSelect->setBounds(editorBounds.removeFromLeft(0.5f * bounds.getWidth() - 5));
+    m_recordSimSelect->setBounds(editorBounds.removeFromRight(0.5f * bounds.getWidth() - 5));
     
     m_performanceMeter->setBounds(bounds.removeFromBottom(rowHeight));
 }
@@ -110,34 +110,34 @@ void MainSoundscapeOSCSimComponent::sliderValueChanged(Slider* slider)
     }
 }
 
-void MainSoundscapeOSCSimComponent::textEditorTextChanged (TextEditor& editor)
+void MainSoundscapeOSCSimComponent::comboBoxChanged (ComboBox* comboBox)
 {
-    if (m_channelSimEdit.get() == &editor)
+    if (m_channelSimSelect.get() == comboBox)
     {
-        auto chCntValue = static_cast<int>(m_channelSimEdit->getText().getIntValue());
-
+        auto chCntValue = 0;
+        auto selectedId = m_channelSimSelect->getSelectedId();
+        if (selectedId == 1)
+            chCntValue = 32;
+        else if (selectedId ==2)
+            chCntValue = 64;
+        else if (selectedId == 2)
+            chCntValue = 128;
+        
         if (m_bridgingWrapper)
             m_bridgingWrapper->SetSimulationChannelCount(chCntValue);
     }
-    else if (m_recordSimEdit.get() == &editor)
+    else if (m_recordSimSelect.get() == comboBox)
     {
-        auto recCntValue = static_cast<int>(m_recordSimEdit->getText().getIntValue());
+        auto recCntValue = 0;
+        auto selectedId = m_recordSimSelect->getSelectedId();
+        if (selectedId == 1)
+            recCntValue = 1;
+        else if (selectedId)
+            recCntValue = 4;
 
         if (m_bridgingWrapper)
             m_bridgingWrapper->SetSimulationRecordCount(recCntValue);
     }
-}
-
-String MainSoundscapeOSCSimComponent::filterNewText (TextEditor& editor, const String& newInput)
-{
-    auto newValue = 0;
-    
-    if (m_channelSimEdit.get() == &editor)
-        newValue = jlimit(1, 128, newInput.getIntValue());
-    else if (m_recordSimEdit.get() == &editor)
-        newValue = jlimit(1, 4, newInput.getIntValue());
-    
-    return String(newValue);
 }
 
 void MainSoundscapeOSCSimComponent::timerCallback()

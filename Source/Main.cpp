@@ -73,13 +73,10 @@ public:
             .findColour(ResizableWindow::backgroundColourId),
             DocumentWindow::closeButton)
         {
-            m_mainComponent = std::make_unique<MainSoundscapeOSCSimComponent>();
-            m_customlookAndFeel = std::make_unique<JUCEAppBasics::CustomLookAndFeel>();
-
             setUsingNativeTitleBar(true);
-            setContentOwned(m_mainComponent.get(), true);
+            setContentOwned(&m_mainComponent, true);
             
-            setLookAndFeel(m_customlookAndFeel.get());
+            setLookAndFeel(&m_customlookAndFeel);
 
 #if JUCE_IOS || JUCE_ANDROID
             setFullScreen(true);
@@ -89,6 +86,11 @@ public:
 #endif
 
             setVisible(true);
+        }
+        
+        ~MainWindow()
+        {
+            setLookAndFeel(nullptr);
         }
 
         void closeButtonPressed() override
@@ -107,8 +109,8 @@ public:
         */
 
     private:
-        std::unique_ptr<MainSoundscapeOSCSimComponent>      m_mainComponent;
-        std::unique_ptr<JUCEAppBasics::CustomLookAndFeel>   m_customlookAndFeel;
+        MainSoundscapeOSCSimComponent      m_mainComponent;
+        JUCEAppBasics::CustomLookAndFeel   m_customlookAndFeel;
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainWindow)
     };
