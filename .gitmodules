@@ -1,3 +1,9 @@
 [submodule "submodules/RemoteProtocolBridge"]
 	path = submodules/RemoteProtocolBridge
 	url = https://github.com/ChristianAhrens/RemoteProtocolBridge
+[submodule "submodules/JUCE-AppBasics"]
+	path = submodules/JUCE-AppBasics
+	url = https://github.com/ChristianAhrens/JUCE-AppBasics
+[submodule "submodules/Servus"]
+	path = submodules/Servus
+	url = https://github.com/ChristianAhrens/Servus

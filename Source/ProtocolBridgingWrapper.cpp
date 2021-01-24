@@ -26,13 +26,14 @@ namespace SoundscapeOSCSim
  *
  */
 ProtocolBridgingWrapper::ProtocolBridgingWrapper()
-	: m_bridgingXml("SoundscapeOSCSim")
+	:   m_servus("_osc._udp"),
+        m_bridgingXml("SoundscapeOSCSim")
 {
-
-	// Controller derives from ProcessingEngineNode::Listener
-	m_processingNode.AddListener(this);
-
 	SetupBridgingNode();
+    
+    m_processingNode.AddListener(this);
+    
+    m_servus.announce(RX_PORT_DS100_DEVICE, JUCEApplication::getInstance()->getApplicationName().toStdString());
 }
 
 /**

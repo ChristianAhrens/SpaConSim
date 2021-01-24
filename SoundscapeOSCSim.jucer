@@ -4,7 +4,7 @@
               bundleIdentifier="com.ChristianAhrens.SoundscapeOSCSim" companyName="Christian Ahrens"
               companyEmail="christianahrens@me.com" displaySplashScreen="0"
               reportAppUsage="0" companyCopyright="2021" jucerFormatVersion="1"
-              headerPath="../../submodules/RemoteProtocolBridge/Source;&#10;../../submodules/RemoteProtocolBridge/submodules/JUCE-AppBasics/Source;"
+              headerPath="../../submodules/RemoteProtocolBridge/Source/&#10;../../submodules/JUCE-AppBasics/Source/&#10;../../submodules/Servus/"
               companyWebsite="https://github.com/ChristianAhrens/SoundscapeOSCSim">
   <MAINGROUP id="cS7SrP" name="SoundscapeOSCSim">
     <GROUP id="{DA3507CD-D9BE-4153-5873-D44DBA9EAF0C}" name="Resources">
@@ -33,25 +33,58 @@
       <FILE id="g0nbLB" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
     </GROUP>
     <GROUP id="{F93FDF74-FF39-A47E-E403-31E5ADA7ADD3}" name="submodules">
-      <GROUP id="{5D1CEB5A-DB08-BAC9-EF17-843234394AA4}" name="RemoteProtocolBridge">
-        <GROUP id="{670D4340-A362-9D5C-AF53-FA5BF9A0FF01}" name="submodules">
-          <GROUP id="{9E885CEA-FC04-D3CB-BA60-D893D47DAB54}" name="JUCE-AppBasics">
-            <GROUP id="{4E116AF5-77F2-F9AB-B9E2-7061C5790FB5}" name="Source">
-              <FILE id="jEEI5R" name="AppConfigurationBase.cpp" compile="1" resource="0"
-                    file="submodules/RemoteProtocolBridge/submodules/JUCE-AppBasics/Source/AppConfigurationBase.cpp"/>
-              <FILE id="f3V2EF" name="AppConfigurationBase.h" compile="0" resource="0"
-                    file="submodules/RemoteProtocolBridge/submodules/JUCE-AppBasics/Source/AppConfigurationBase.h"/>
-              <FILE id="dwH2H4" name="CustomLookAndFeel.cpp" compile="1" resource="0"
-                    file="submodules/RemoteProtocolBridge/submodules/JUCE-AppBasics/Source/CustomLookAndFeel.cpp"/>
-              <FILE id="G2ZGEQ" name="CustomLookAndFeel.h" compile="0" resource="0"
-                    file="submodules/RemoteProtocolBridge/submodules/JUCE-AppBasics/Source/CustomLookAndFeel.h"/>
-              <FILE id="kJoMjt" name="Image_utils.cpp" compile="1" resource="0" file="submodules/RemoteProtocolBridge/submodules/JUCE-AppBasics/Source/Image_utils.cpp"/>
-              <FILE id="MbVyYh" name="Image_utils.h" compile="0" resource="0" file="submodules/RemoteProtocolBridge/submodules/JUCE-AppBasics/Source/Image_utils.h"/>
-              <FILE id="cvDq4n" name="iOS_utils.cpp" compile="1" resource="0" file="submodules/RemoteProtocolBridge/submodules/JUCE-AppBasics/Source/iOS_utils.cpp"/>
-              <FILE id="NgYNrw" name="iOS_utils.h" compile="0" resource="0" file="submodules/RemoteProtocolBridge/submodules/JUCE-AppBasics/Source/iOS_utils.h"/>
-            </GROUP>
+      <GROUP id="{9CCE33BC-DFA0-AFFB-5206-C2377252AD64}" name="Servus">
+        <GROUP id="{F0157EC5-9555-900E-531F-BF6E4749BCDB}" name="servus">
+          <GROUP id="{E17B9D4A-96AE-4BD8-77C6-87CCD2EC54C2}" name="md5">
+            <FILE id="ug8DNO" name="md5.cc" compile="1" resource="0" file="submodules/Servus/servus/md5/md5.cc"/>
+            <FILE id="c2nYb0" name="md5.hh" compile="0" resource="0" file="submodules/Servus/servus/md5/md5.hh"/>
           </GROUP>
+          <GROUP id="{57126B94-CB75-C245-5DD9-8BEBFD4168A2}" name="dnssd">
+            <FILE id="ErVLMt" name="servus.h" compile="0" resource="0" file="submodules/Servus/servus/dnssd/servus.h"/>
+          </GROUP>
+          <GROUP id="{58B121C1-F580-4531-79A5-19756CC1E695}" name="avahi">
+            <FILE id="yjR1JO" name="servus.h" compile="0" resource="0" file="submodules/Servus/servus/avahi/servus.h"/>
+          </GROUP>
+          <GROUP id="{27587484-3704-D78F-D8BA-9FFAF2A9463F}" name="none">
+            <FILE id="bBbIcb" name="servus.h" compile="0" resource="0" file="submodules/Servus/servus/none/servus.h"/>
+          </GROUP>
+          <FILE id="puKVvS" name="api.h" compile="0" resource="0" file="submodules/Servus/servus/api.h"/>
+          <FILE id="kID3Oz" name="defines.h" compile="0" resource="0" file="submodules/Servus/servus/defines.h"/>
+          <FILE id="ZghWwv" name="definesDarwin.h" compile="0" resource="0" file="submodules/Servus/servus/definesDarwin.h"/>
+          <FILE id="QQYNeR" name="definesWin32.h" compile="0" resource="0" file="submodules/Servus/servus/definesWin32.h"/>
+          <FILE id="P7jbQy" name="listener.h" compile="0" resource="0" file="submodules/Servus/servus/listener.h"/>
+          <FILE id="vaTb6x" name="result.h" compile="0" resource="0" file="submodules/Servus/servus/result.h"/>
+          <FILE id="wB8lxH" name="serializable.cpp" compile="1" resource="0"
+                file="submodules/Servus/servus/serializable.cpp"/>
+          <FILE id="IzhZNo" name="serializable.h" compile="0" resource="0" file="submodules/Servus/servus/serializable.h"/>
+          <FILE id="d2bQ4Q" name="servus.cpp" compile="1" resource="0" file="submodules/Servus/servus/servus.cpp"/>
+          <FILE id="a4BysB" name="servus.h" compile="0" resource="0" file="submodules/Servus/servus/servus.h"/>
+          <FILE id="EmbETC" name="types.h" compile="0" resource="0" file="submodules/Servus/servus/types.h"/>
+          <FILE id="jhgNFK" name="uint128_t.cpp" compile="1" resource="0" file="submodules/Servus/servus/uint128_t.cpp"/>
+          <FILE id="i83NEL" name="uint128_t.h" compile="0" resource="0" file="submodules/Servus/servus/uint128_t.h"/>
+          <FILE id="DjfOGc" name="uri.cpp" compile="1" resource="0" file="submodules/Servus/servus/uri.cpp"/>
+          <FILE id="QaaqwT" name="uri.h" compile="0" resource="0" file="submodules/Servus/servus/uri.h"/>
+          <FILE id="e1Oscz" name="version.cpp" compile="1" resource="0" file="submodules/Servus/servus/version.cpp"/>
+          <FILE id="DJ4Vvp" name="version.h" compile="0" resource="0" file="submodules/Servus/servus/version.h"/>
         </GROUP>
+      </GROUP>
+      <GROUP id="{9E885CEA-FC04-D3CB-BA60-D893D47DAB54}" name="JUCE-AppBasics">
+        <GROUP id="{4E116AF5-77F2-F9AB-B9E2-7061C5790FB5}" name="Source">
+          <FILE id="oO19of" name="AppConfigurationBase.cpp" compile="1" resource="0"
+                file="submodules/JUCE-AppBasics/Source/AppConfigurationBase.cpp"/>
+          <FILE id="mpW1J4" name="AppConfigurationBase.h" compile="0" resource="0"
+                file="submodules/JUCE-AppBasics/Source/AppConfigurationBase.h"/>
+          <FILE id="Vxa5H8" name="CustomLookAndFeel.cpp" compile="1" resource="0"
+                file="submodules/JUCE-AppBasics/Source/CustomLookAndFeel.cpp"/>
+          <FILE id="EXuM2h" name="CustomLookAndFeel.h" compile="0" resource="0"
+                file="submodules/JUCE-AppBasics/Source/CustomLookAndFeel.h"/>
+          <FILE id="pLni2n" name="Image_utils.cpp" compile="1" resource="0" file="submodules/JUCE-AppBasics/Source/Image_utils.cpp"/>
+          <FILE id="HomBQ3" name="Image_utils.h" compile="0" resource="0" file="submodules/JUCE-AppBasics/Source/Image_utils.h"/>
+          <FILE id="fLQONA" name="iOS_utils.cpp" compile="1" resource="0" file="submodules/JUCE-AppBasics/Source/iOS_utils.cpp"/>
+          <FILE id="uFA9AR" name="iOS_utils.h" compile="0" resource="0" file="submodules/JUCE-AppBasics/Source/iOS_utils.h"/>
+        </GROUP>
+      </GROUP>
+      <GROUP id="{5D1CEB5A-DB08-BAC9-EF17-843234394AA4}" name="RemoteProtocolBridge">
         <GROUP id="{101B7526-C17E-A526-9CCF-9B16385E1D4F}" name="Source">
           <GROUP id="{7BEDE2E7-D445-0646-3278-7EE2B5985D06}" name="ProcessingEngine">
             <GROUP id="{E942E9CB-791F-AAD7-FE92-FD5DE9A476C6}" name="ObjectDataHandling">

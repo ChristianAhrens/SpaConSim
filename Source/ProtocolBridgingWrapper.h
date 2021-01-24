@@ -22,6 +22,7 @@
 
 #include <JuceHeader.h>
 
+#include <servus/servus.h>
 
 namespace SoundscapeOSCSim
 {
@@ -79,6 +80,8 @@ public:
 private:
 	//==========================================================================
 	void SetupBridgingNode();
+    
+    servus::Servus m_servus;
 
 	/**
 	 * A processing engine node can send data to and receive data from multiple protocols that is encapsulates.
