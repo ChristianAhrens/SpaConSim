@@ -41,6 +41,10 @@
                     file="submodules/RemoteProtocolBridge/submodules/JUCE-AppBasics/Source/AppConfigurationBase.cpp"/>
               <FILE id="f3V2EF" name="AppConfigurationBase.h" compile="0" resource="0"
                     file="submodules/RemoteProtocolBridge/submodules/JUCE-AppBasics/Source/AppConfigurationBase.h"/>
+              <FILE id="dwH2H4" name="CustomLookAndFeel.cpp" compile="1" resource="0"
+                    file="submodules/RemoteProtocolBridge/submodules/JUCE-AppBasics/Source/CustomLookAndFeel.cpp"/>
+              <FILE id="G2ZGEQ" name="CustomLookAndFeel.h" compile="0" resource="0"
+                    file="submodules/RemoteProtocolBridge/submodules/JUCE-AppBasics/Source/CustomLookAndFeel.h"/>
               <FILE id="kJoMjt" name="Image_utils.cpp" compile="1" resource="0" file="submodules/RemoteProtocolBridge/submodules/JUCE-AppBasics/Source/Image_utils.cpp"/>
               <FILE id="MbVyYh" name="Image_utils.h" compile="0" resource="0" file="submodules/RemoteProtocolBridge/submodules/JUCE-AppBasics/Source/Image_utils.h"/>
               <FILE id="cvDq4n" name="iOS_utils.cpp" compile="1" resource="0" file="submodules/RemoteProtocolBridge/submodules/JUCE-AppBasics/Source/iOS_utils.cpp"/>

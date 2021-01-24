@@ -73,6 +73,8 @@ public:
 
 	//==========================================================================
 	bool SetSimulationInterval(int intervalValue);
+    bool SetSimulationChannelCount(int channlCountValue);
+    bool SetSimulationRecordCount(int recordCountValue);
 
 private:
 	//==========================================================================

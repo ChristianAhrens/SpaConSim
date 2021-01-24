@@ -32,6 +32,8 @@ namespace SoundscapeOSCSim
 class MainSoundscapeOSCSimComponent :   public juce::Component,
                                         public ProtocolBridgingWrapper::Listener,
                                         public Slider::Listener,
+                                        public TextEditor::Listener,
+                                        public TextEditor::InputFilter,
                                         public Timer
 {
 public:
@@ -47,6 +49,10 @@ public:
 
     //==========================================================================
     void sliderValueChanged(Slider* slider) override;
+    
+    //==========================================================================
+    void textEditorTextChanged (TextEditor&) override;
+    String filterNewText (TextEditor&, const String& newInput) override;
 
     //==========================================================================
     void timerCallback() override;
@@ -54,9 +60,19 @@ public:
 private:
     std::unique_ptr<Label>      m_speedSliderLabel;
     std::unique_ptr<Slider>     m_speedSlider;
+    
+    std::unique_ptr<Label>      m_channelSimEditLabel;
+    std::unique_ptr<TextEditor> m_channelSimEdit;
+    
+    std::unique_ptr<Label>      m_recordSimEditLabel;
+    std::unique_ptr<TextEditor> m_recordSimEdit;
+    
+    std::unique_ptr<Slider>     m_performanceMeter;
 
     std::unique_ptr<ProtocolBridgingWrapper>    m_bridgingWrapper;
+    std::uint32_t                               m_bridgingPerformanceInterval{ 400 };
     std::uint64_t                               m_bridgingPerformanceCounter{ 0 };
+    std::uint64_t                               m_bridgingPerformanceMaxCount{ 0 };
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainSoundscapeOSCSimComponent)
 };

@@ -102,6 +102,7 @@ void ProtocolBridgingWrapper::Reconnect()
 /**
  * Sets the current simulation interval value to internal xml config and inserts it into processing node.
  * @param intervalValue		The new interval value to set active
+ * @return True on success, false on failure
  */
 bool ProtocolBridgingWrapper::SetSimulationInterval(int intervalValue)
 {
@@ -128,6 +129,71 @@ bool ProtocolBridgingWrapper::SetSimulationInterval(int intervalValue)
 	}
 	else
 		return false;
+}
+
+
+/**
+ * Sets the current simulation channel count value to internal xml config and inserts it into processing node.
+ * @param channlCountValue        The new interval value to set active
+ * @return True on success, false on failure
+ */
+bool ProtocolBridgingWrapper::SetSimulationChannelCount(int channlCountValue)
+{
+    auto nodeXmlElement = m_bridgingXml.getChildByName(ProcessingEngineConfig::getTagName(ProcessingEngineConfig::TagID::NODE));
+    if (nodeXmlElement)
+    {
+        auto objectHandlingXmlElement = nodeXmlElement->getChildByName(ProcessingEngineConfig::getTagName(ProcessingEngineConfig::TagID::OBJECTHANDLING));
+        if (objectHandlingXmlElement)
+        {
+            auto simChCntXmlElement = objectHandlingXmlElement->getChildByName(ProcessingEngineConfig::getTagName(ProcessingEngineConfig::TagID::SIMCHCNT));
+            if (simChCntXmlElement)
+            {
+                simChCntXmlElement->setAttribute(ProcessingEngineConfig::getAttributeName(ProcessingEngineConfig::AttributeID::COUNT), channlCountValue);
+
+                Reconnect();
+
+                return true;
+            }
+            else
+                return false;
+        }
+        else
+            return false;
+    }
+    else
+        return false;
+}
+
+/**
+ * Sets the current simulation record count value to internal xml config and inserts it into processing node.
+ * @param recordCountValue        The new interval value to set active
+ * @return True on success, false on failure
+ */
+bool ProtocolBridgingWrapper::SetSimulationRecordCount(int recordCountValue)
+{
+    auto nodeXmlElement = m_bridgingXml.getChildByName(ProcessingEngineConfig::getTagName(ProcessingEngineConfig::TagID::NODE));
+    if (nodeXmlElement)
+    {
+        auto objectHandlingXmlElement = nodeXmlElement->getChildByName(ProcessingEngineConfig::getTagName(ProcessingEngineConfig::TagID::OBJECTHANDLING));
+        if (objectHandlingXmlElement)
+        {
+            auto simMapCntXmlElement = objectHandlingXmlElement->getChildByName(ProcessingEngineConfig::getTagName(ProcessingEngineConfig::TagID::SIMMAPCNT));
+            if (simMapCntXmlElement)
+            {
+                simMapCntXmlElement->setAttribute(ProcessingEngineConfig::getAttributeName(ProcessingEngineConfig::AttributeID::COUNT), recordCountValue);
+
+                Reconnect();
+
+                return true;
+            }
+            else
+                return false;
+        }
+        else
+            return false;
+    }
+    else
+        return false;
 }
 
 /**
@@ -167,6 +233,10 @@ void ProtocolBridgingWrapper::SetupBridgingNode()
 
 		protocolAXmlElement->setAttribute(ProcessingEngineConfig::getAttributeName(ProcessingEngineConfig::AttributeID::TYPE), ProcessingEngineConfig::ProtocolTypeToString(PT_OSCProtocol));
 		protocolAXmlElement->setAttribute(ProcessingEngineConfig::getAttributeName(ProcessingEngineConfig::AttributeID::USESACTIVEOBJ), 0);
+        
+        auto ipAdressXmlElement = protocolAXmlElement->createNewChildElement(ProcessingEngineConfig::getTagName(ProcessingEngineConfig::TagID::IPADDRESS));
+        if (ipAdressXmlElement)
+            ipAdressXmlElement->setAttribute(ProcessingEngineConfig::getAttributeName(ProcessingEngineConfig::AttributeID::ADRESS), "");
 
 		auto clientPortXmlElement = protocolAXmlElement->createNewChildElement(ProcessingEngineConfig::getTagName(ProcessingEngineConfig::TagID::CLIENTPORT));
 		if (clientPortXmlElement)

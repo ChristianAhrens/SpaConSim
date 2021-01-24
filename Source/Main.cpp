@@ -20,6 +20,8 @@
 
 #include "MainSoundscapeOSCSimComponent.h"
 
+#include "../submodules/RemoteProtocolBridge/submodules/JUCE-AppBasics/Source/CustomLookAndFeel.h"
+
 namespace SoundscapeOSCSim
 {
 
@@ -69,17 +71,20 @@ public:
         MainWindow(String name) : DocumentWindow(name,
             Desktop::getInstance().getDefaultLookAndFeel()
             .findColour(ResizableWindow::backgroundColourId),
-            DocumentWindow::allButtons)
+            DocumentWindow::closeButton)
         {
             m_mainComponent = std::make_unique<MainSoundscapeOSCSimComponent>();
+            m_customlookAndFeel = std::make_unique<JUCEAppBasics::CustomLookAndFeel>();
 
             setUsingNativeTitleBar(true);
             setContentOwned(m_mainComponent.get(), true);
+            
+            setLookAndFeel(m_customlookAndFeel.get());
 
 #if JUCE_IOS || JUCE_ANDROID
             setFullScreen(true);
 #else
-            setResizable(true, true);
+            setResizable(false, false);
             centreWithSize(getWidth(), getHeight());
 #endif
 
@@ -102,7 +107,8 @@ public:
         */
 
     private:
-        std::unique_ptr<MainSoundscapeOSCSimComponent>   m_mainComponent;
+        std::unique_ptr<MainSoundscapeOSCSimComponent>      m_mainComponent;
+        std::unique_ptr<JUCEAppBasics::CustomLookAndFeel>   m_customlookAndFeel;
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainWindow)
     };
