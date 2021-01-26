@@ -181,15 +181,15 @@ void MainSoundscapeOSCSimComponent::timerCallback()
 {
     if (m_bridgingPerformanceInterval > 0)
     {
-        auto counter = static_cast<double>(m_bridgingPerformanceInterval);
+        auto perfVal = static_cast<double>(m_bridgingPerformanceCounter) * (1000 / m_bridgingPerformanceInterval);
         if (m_bridgingPerformanceMaxCount < m_bridgingPerformanceCounter)
         {
             m_bridgingPerformanceMaxCount = m_bridgingPerformanceCounter;
 
-            m_performanceMeter->setRange(0, counter * (1000 / m_bridgingPerformanceInterval), 1);
+            m_performanceMeter->setRange(0, perfVal, 1);
         }
 
-        m_performanceMeter->setValue(counter * (1000 / m_bridgingPerformanceInterval));
+        m_performanceMeter->setValue(perfVal);
     }
 
     m_bridgingPerformanceCounter = 0;
