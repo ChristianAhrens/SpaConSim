@@ -52,6 +52,21 @@ MainSoundscapeOSCSimComponent::MainSoundscapeOSCSimComponent()
     m_recordSimSelectLabel = std::make_unique<Label>("recordSimSelectLabel", "Simulated record count");
     m_recordSimSelectLabel->attachToComponent(m_recordSimSelect.get(), false);
     addAndMakeVisible(m_recordSimSelectLabel.get());
+
+    m_sectionLine1 = std::make_unique<WhiteLineComponent>(WhiteLineComponent::vAlign::Bottom);
+    addAndMakeVisible(m_sectionLine1.get());
+
+    m_localSystemInterfacesInfoLabel = std::make_unique<Label>("localSystemInterfacesInfo", "- System's main IP is " + juce::IPAddress::getLocalAddress().toString());
+    addAndMakeVisible(m_localSystemInterfacesInfoLabel.get());
+
+    m_listeningPortAnnouncedInfoLabel = std::make_unique<Label>("listeningPortAnnouncedInfo", "- Listening on port " + String(RX_PORT_DS100_HOST));
+    addAndMakeVisible(m_listeningPortAnnouncedInfoLabel.get());
+
+    m_clientRemotePortInfoLabel = std::make_unique<Label>("clientRemotePortInfo", "- Sending data replies to remote client port " + String(RX_PORT_DS100_DEVICE));
+    addAndMakeVisible(m_clientRemotePortInfoLabel.get());
+
+    m_sectionLine2 = std::make_unique<WhiteLineComponent>(WhiteLineComponent::vAlign::Top);
+    addAndMakeVisible(m_sectionLine2.get());
     
     m_performanceMeter = std::make_unique<Slider>(Slider::LinearBar, Slider::TextBoxAbove);
     m_performanceMeter->setRange(0, 1, 1);
@@ -63,7 +78,12 @@ MainSoundscapeOSCSimComponent::MainSoundscapeOSCSimComponent()
     m_bridgingWrapper = std::make_unique<ProtocolBridgingWrapper>();
     m_bridgingWrapper->AddListener(this);
 
-    setSize(320, 145);
+    auto rowHeight = 25;
+    auto margin = 5;
+    auto width = 320;
+    auto height = 10 * rowHeight + 2 * margin;
+
+    setSize(width, height);
 
     startTimer(m_bridgingPerformanceInterval);
 }
@@ -81,21 +101,38 @@ void MainSoundscapeOSCSimComponent::paint(juce::Graphics& g)
 void MainSoundscapeOSCSimComponent::resized()
 {
     auto rowHeight = 25;
-    auto bounds = getLocalBounds().reduced(5, 5);
+    auto margin = 5;
+
+    auto bounds = getLocalBounds().reduced(margin, margin);
     
     bounds.removeFromTop(rowHeight);
     m_speedSlider->setBounds(bounds.removeFromTop(rowHeight));
     
     bounds.removeFromTop(rowHeight);
     auto editorBounds = bounds.removeFromTop(rowHeight);
-    m_channelSimSelect->setBounds(editorBounds.removeFromLeft(0.5f * bounds.getWidth() - 5));
-    m_recordSimSelect->setBounds(editorBounds.removeFromRight(0.5f * bounds.getWidth() - 5));
+    m_channelSimSelect->setBounds(editorBounds.removeFromLeft((bounds.getWidth() / 2) - margin));
+    m_recordSimSelect->setBounds(editorBounds.removeFromRight((bounds.getWidth() / 2) - margin));
+
+    m_sectionLine1->setBounds(bounds.removeFromTop(rowHeight));
+
+    m_localSystemInterfacesInfoLabel->setBounds(bounds.removeFromTop(rowHeight));
+
+    m_listeningPortAnnouncedInfoLabel->setBounds(bounds.removeFromTop(rowHeight));
+
+    m_clientRemotePortInfoLabel->setBounds(bounds.removeFromTop(rowHeight));
+
+    m_sectionLine2->setBounds(bounds.removeFromTop(rowHeight));
     
-    m_performanceMeter->setBounds(bounds.removeFromBottom(rowHeight));
+    m_performanceMeter->setBounds(bounds.removeFromTop(rowHeight));
 }
 
 void MainSoundscapeOSCSimComponent::HandleMessageData(NodeId nodeId, ProtocolId senderProtocolId, RemoteObjectIdentifier Id, const RemoteObjectMessageData& msgData)
 {
+    ignoreUnused(nodeId);
+    ignoreUnused(senderProtocolId);
+    ignoreUnused(Id);
+    ignoreUnused(msgData);
+
     m_bridgingPerformanceCounter++;
 }
 
@@ -142,14 +179,18 @@ void MainSoundscapeOSCSimComponent::comboBoxChanged (ComboBox* comboBox)
 
 void MainSoundscapeOSCSimComponent::timerCallback()
 {
-    if (m_bridgingPerformanceMaxCount < m_bridgingPerformanceCounter)
+    if (m_bridgingPerformanceInterval > 0)
     {
-        m_bridgingPerformanceMaxCount = m_bridgingPerformanceCounter;
-        
-        m_performanceMeter->setRange(0, m_bridgingPerformanceMaxCount * (1000/m_bridgingPerformanceInterval), 1);
+        auto counter = static_cast<double>(m_bridgingPerformanceInterval);
+        if (m_bridgingPerformanceMaxCount < m_bridgingPerformanceCounter)
+        {
+            m_bridgingPerformanceMaxCount = m_bridgingPerformanceCounter;
+
+            m_performanceMeter->setRange(0, counter * (1000 / m_bridgingPerformanceInterval), 1);
+        }
+
+        m_performanceMeter->setValue(counter * (1000 / m_bridgingPerformanceInterval));
     }
-    
-    m_performanceMeter->setValue(m_bridgingPerformanceCounter * (1000/m_bridgingPerformanceInterval));
 
     m_bridgingPerformanceCounter = 0;
 }

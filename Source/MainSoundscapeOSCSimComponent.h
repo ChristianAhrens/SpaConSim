@@ -56,6 +56,49 @@ public:
     void timerCallback() override;
 
 private:
+    //==========================================================================
+    class WhiteLineComponent : public Component
+    {
+    public:
+        enum vAlign
+        {
+            Center,
+            Top,
+            Bottom
+        };
+
+        WhiteLineComponent(vAlign a = Center)
+        {
+            m_alignment = a;
+        }
+
+        //==========================================================================
+        void paint(juce::Graphics& g) override
+        {
+            auto yPos = 0.0f;
+            switch (m_alignment)
+            {
+            case Top:
+                yPos = 0.0f;
+                break;
+            case Bottom:
+                yPos = static_cast<float>(getHeight());
+                break;
+            case Center:
+            default:
+                yPos = 0.5f * static_cast<float>(getHeight());
+                break;
+            }
+
+            g.setColour(getLookAndFeel().findColour(TextEditor::outlineColourId));
+            g.drawLine(0.0f, yPos, static_cast<float>(getWidth()), yPos, 1.0f);
+        }
+
+    private:
+        vAlign m_alignment;
+    };
+
+    //==========================================================================
     std::unique_ptr<Label>      m_speedSliderLabel;
     std::unique_ptr<Slider>     m_speedSlider;
     
@@ -64,6 +107,14 @@ private:
     
     std::unique_ptr<Label>      m_recordSimSelectLabel;
     std::unique_ptr<ComboBox>   m_recordSimSelect;
+
+    std::unique_ptr<WhiteLineComponent> m_sectionLine1;
+
+    std::unique_ptr<Label>      m_localSystemInterfacesInfoLabel;
+    std::unique_ptr<Label>      m_listeningPortAnnouncedInfoLabel;
+    std::unique_ptr<Label>      m_clientRemotePortInfoLabel;
+
+    std::unique_ptr<WhiteLineComponent> m_sectionLine2;
     
     std::unique_ptr<Slider>     m_performanceMeter;
 
