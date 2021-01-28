@@ -27,7 +27,8 @@ namespace SoundscapeOSCSim
 MainSoundscapeOSCSimComponent::MainSoundscapeOSCSimComponent()
 {
     m_speedSlider  = std::make_unique<Slider>(Slider::LinearHorizontal, Slider::TextBoxRight);
-    m_speedSlider->setRange(0, 1000, 25);
+    m_speedSlider->setRange(0, 1000, 5);
+    m_speedSlider->setSkewFactor(0.5f);
     m_speedSlider->setValue(200);
     m_speedSlider->addListener(this);
     addAndMakeVisible(m_speedSlider.get());
