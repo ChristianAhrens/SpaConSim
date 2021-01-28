@@ -56,6 +56,9 @@ MainSoundscapeOSCSimComponent::MainSoundscapeOSCSimComponent()
 
     m_sectionLine1 = std::make_unique<WhiteLineComponent>(WhiteLineComponent::vAlign::Bottom);
     addAndMakeVisible(m_sectionLine1.get());
+    
+    m_appInstanceInfoLabel = std::make_unique<Label>("appInstanceInfo", JUCEApplication::getInstance()->getApplicationName() + String(" v") + String(JUCE_STRINGIFY(JUCE_APP_VERSION)));
+    addAndMakeVisible(m_appInstanceInfoLabel.get());
 
     m_localSystemInterfacesInfoLabel = std::make_unique<Label>("localSystemInterfacesInfo", "- System's main IP is " + juce::IPAddress::getLocalAddress().toString());
     addAndMakeVisible(m_localSystemInterfacesInfoLabel.get());
@@ -82,7 +85,7 @@ MainSoundscapeOSCSimComponent::MainSoundscapeOSCSimComponent()
     auto rowHeight = 25;
     auto margin = 5;
     auto width = 320;
-    auto height = 10 * rowHeight + 2 * margin;
+    auto height = 11 * rowHeight + 2 * margin;
 
     setSize(width, height);
 
@@ -116,6 +119,8 @@ void MainSoundscapeOSCSimComponent::resized()
 
     m_sectionLine1->setBounds(bounds.removeFromTop(rowHeight));
 
+    m_appInstanceInfoLabel->setBounds(bounds.removeFromTop(rowHeight));
+    
     m_localSystemInterfacesInfoLabel->setBounds(bounds.removeFromTop(rowHeight));
 
     m_listeningPortAnnouncedInfoLabel->setBounds(bounds.removeFromTop(rowHeight));

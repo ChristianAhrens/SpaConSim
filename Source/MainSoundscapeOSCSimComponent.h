@@ -110,6 +110,7 @@ private:
 
     std::unique_ptr<WhiteLineComponent> m_sectionLine1;
 
+    std::unique_ptr<Label>      m_appInstanceInfoLabel;
     std::unique_ptr<Label>      m_localSystemInterfacesInfoLabel;
     std::unique_ptr<Label>      m_listeningPortAnnouncedInfoLabel;
     std::unique_ptr<Label>      m_clientRemotePortInfoLabel;
