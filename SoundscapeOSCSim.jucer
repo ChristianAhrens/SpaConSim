@@ -75,6 +75,11 @@
         </GROUP>
       </GROUP>
       <GROUP id="{9E885CEA-FC04-D3CB-BA60-D893D47DAB54}" name="JUCE-AppBasics">
+        <GROUP id="{F85FA7E2-BDC6-FC26-AC30-6182A1FC2A89}" name="Resources">
+          <GROUP id="{10D4B388-8F03-C1BF-150B-D0F6A90696D8}" name="Images">
+            <FILE id="Kp1Rr9" name="help-24px.svg" compile="0" resource="1" file="submodules/JUCE-AppBasics/Resources/Images/help-24px.svg"/>
+          </GROUP>
+        </GROUP>
         <GROUP id="{4E116AF5-77F2-F9AB-B9E2-7061C5790FB5}" name="Source">
           <FILE id="oO19of" name="AppConfigurationBase.cpp" compile="1" resource="0"
                 file="submodules/JUCE-AppBasics/Source/AppConfigurationBase.cpp"/>

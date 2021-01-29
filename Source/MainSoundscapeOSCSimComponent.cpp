@@ -1,6 +1,6 @@
 /* Copyright (c) 2020-2021, Christian Ahrens
  *
- * This file is part of SoundscapeBridgeApp <https://github.com/ChristianAhrens/SoundscapeBridgeApp>
+ * This file is part of SoundscapeOSCSim <https://github.com/ChristianAhrens/SoundscapeOSCSim>
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License version 3.0 as published
@@ -20,6 +20,8 @@
 
 #include <JuceHeader.h>
 
+#include "../submodules/JUCE-AppBasics/Source/Image_utils.h"
+
 namespace SoundscapeOSCSim
 {
 
@@ -29,7 +31,7 @@ MainSoundscapeOSCSimComponent::MainSoundscapeOSCSimComponent()
     m_speedSlider  = std::make_unique<Slider>(Slider::LinearHorizontal, Slider::TextBoxRight);
     m_speedSlider->setRange(0, 1000, 5);
     m_speedSlider->setSkewFactor(0.5f);
-    m_speedSlider->setValue(200);
+    m_speedSlider->setValue(m_bridgingPerformanceInterval);
     m_speedSlider->addListener(this);
     addAndMakeVisible(m_speedSlider.get());
     m_speedSliderLabel = std::make_unique<Label>("speedSliderLabel", "Simulation update interval (ms)");
@@ -59,6 +61,18 @@ MainSoundscapeOSCSimComponent::MainSoundscapeOSCSimComponent()
     
     m_appInstanceInfoLabel = std::make_unique<Label>("appInstanceInfo", JUCEApplication::getInstance()->getApplicationName() + String(" v") + String(JUCE_STRINGIFY(JUCE_APP_VERSION)));
     addAndMakeVisible(m_appInstanceInfoLabel.get());
+    
+    m_helpButton = std::make_unique<DrawableButton>("Help", DrawableButton::ButtonStyle::ImageFitted);
+    m_helpButton->onClick = [this] {
+        auto githubURL = String("https://www.github.com");
+        auto companyName = String("ChristianAhrens");
+        auto appName = JUCEApplication::getInstance()->getApplicationName();
+        auto repoBasePath = String("blob/master");
+        auto URLString = githubURL + "/" + companyName + "/" + appName + "/" + repoBasePath + "/";
+        auto helpURLString = URLString + "README.md";
+        URL(helpURLString).launchInDefaultBrowser();
+    };
+    addAndMakeVisible(m_helpButton.get());
 
     m_localSystemInterfacesInfoLabel = std::make_unique<Label>("localSystemInterfacesInfo", "- System's main IP is " + juce::IPAddress::getLocalAddress().toString());
     addAndMakeVisible(m_localSystemInterfacesInfoLabel.get());
@@ -88,6 +102,8 @@ MainSoundscapeOSCSimComponent::MainSoundscapeOSCSimComponent()
     auto height = 11 * rowHeight + 2 * margin;
 
     setSize(width, height);
+
+    lookAndFeelChanged();
 
     startTimer(m_bridgingPerformanceInterval);
 }
@@ -119,7 +135,9 @@ void MainSoundscapeOSCSimComponent::resized()
 
     m_sectionLine1->setBounds(bounds.removeFromTop(rowHeight));
 
-    m_appInstanceInfoLabel->setBounds(bounds.removeFromTop(rowHeight));
+    auto appInfoRowBounds = bounds.removeFromTop(rowHeight);
+    m_helpButton->setBounds(appInfoRowBounds.removeFromRight(rowHeight));
+    m_appInstanceInfoLabel->setBounds(appInfoRowBounds);
     
     m_localSystemInterfacesInfoLabel->setBounds(bounds.removeFromTop(rowHeight));
 
@@ -130,6 +148,20 @@ void MainSoundscapeOSCSimComponent::resized()
     m_sectionLine2->setBounds(bounds.removeFromTop(rowHeight));
     
     m_performanceMeter->setBounds(bounds.removeFromTop(rowHeight));
+}
+
+void MainSoundscapeOSCSimComponent::lookAndFeelChanged()
+{
+    Component::lookAndFeelChanged();
+
+    auto colourOn = getLookAndFeel().findColour(TextButton::ColourIds::textColourOnId);
+    auto colourOff = getLookAndFeel().findColour(TextButton::ColourIds::textColourOffId);
+
+    std::unique_ptr<juce::Drawable> NormalImage, OverImage, DownImage, DisabledImage, NormalOnImage, OverOnImage, DownOnImage, DisabledOnImage;
+    JUCEAppBasics::Image_utils::getDrawableButtonImages(BinaryData::help24px_svg, NormalImage, OverImage, DownImage, DisabledImage, NormalOnImage, OverOnImage, DownOnImage, DisabledOnImage,
+        colourOn, colourOff, colourOff, colourOff, colourOn, colourOn, colourOn, colourOn);
+
+    m_helpButton->setImages(NormalImage.get(), OverImage.get(), DownImage.get(), DisabledImage.get(), NormalOnImage.get(), OverOnImage.get(), DownOnImage.get(), DisabledOnImage.get());
 }
 
 void MainSoundscapeOSCSimComponent::HandleMessageData(NodeId nodeId, ProtocolId senderProtocolId, RemoteObjectIdentifier Id, const RemoteObjectMessageData& msgData)

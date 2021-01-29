@@ -1,6 +1,6 @@
 /* Copyright (c) 2021, Christian Ahrens
  *
- * This file is part of SoundscapeBridgeApp <https://github.com/ChristianAhrens/SoundscapeBridgeApp>
+ * This file is part of SoundscapeOSCSim <https://github.com/ChristianAhrens/SoundscapeOSCSim>
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License version 3.0 as published
@@ -42,6 +42,9 @@ public:
     //==========================================================================
     void paint(juce::Graphics&) override;
     void resized() override;
+
+    //==============================================================================
+    void lookAndFeelChanged() override;
 
     //==========================================================================
     void HandleMessageData(NodeId nodeId, ProtocolId senderProtocolId, RemoteObjectIdentifier Id, const RemoteObjectMessageData& msgData) override;
@@ -99,25 +102,26 @@ private:
     };
 
     //==========================================================================
-    std::unique_ptr<Label>      m_speedSliderLabel;
-    std::unique_ptr<Slider>     m_speedSlider;
+    std::unique_ptr<Label>              m_speedSliderLabel;
+    std::unique_ptr<Slider>             m_speedSlider;
     
-    std::unique_ptr<Label>      m_channelSimSelectLabel;
-    std::unique_ptr<ComboBox>   m_channelSimSelect;
+    std::unique_ptr<Label>              m_channelSimSelectLabel;
+    std::unique_ptr<ComboBox>           m_channelSimSelect;
     
-    std::unique_ptr<Label>      m_recordSimSelectLabel;
-    std::unique_ptr<ComboBox>   m_recordSimSelect;
+    std::unique_ptr<Label>              m_recordSimSelectLabel;
+    std::unique_ptr<ComboBox>           m_recordSimSelect;
 
     std::unique_ptr<WhiteLineComponent> m_sectionLine1;
 
-    std::unique_ptr<Label>      m_appInstanceInfoLabel;
-    std::unique_ptr<Label>      m_localSystemInterfacesInfoLabel;
-    std::unique_ptr<Label>      m_listeningPortAnnouncedInfoLabel;
-    std::unique_ptr<Label>      m_clientRemotePortInfoLabel;
+    std::unique_ptr<Label>              m_appInstanceInfoLabel;
+    std::unique_ptr<DrawableButton>	    m_helpButton;
+    std::unique_ptr<Label>              m_localSystemInterfacesInfoLabel;
+    std::unique_ptr<Label>              m_listeningPortAnnouncedInfoLabel;
+    std::unique_ptr<Label>              m_clientRemotePortInfoLabel;
 
     std::unique_ptr<WhiteLineComponent> m_sectionLine2;
     
-    std::unique_ptr<Slider>     m_performanceMeter;
+    std::unique_ptr<Slider>             m_performanceMeter;
 
     std::unique_ptr<ProtocolBridgingWrapper>    m_bridgingWrapper;
     std::uint32_t                               m_bridgingPerformanceInterval{ 400 };
