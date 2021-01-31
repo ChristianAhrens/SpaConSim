@@ -20,7 +20,7 @@
 
 #include "MainSoundscapeOSCSimComponent.h"
 
-#include "../submodules/RemoteProtocolBridge/submodules/JUCE-AppBasics/Source/CustomLookAndFeel.h"
+#include "../submodules/JUCE-AppBasics/Source/CustomLookAndFeel.h"
 
 namespace SoundscapeOSCSim
 {
