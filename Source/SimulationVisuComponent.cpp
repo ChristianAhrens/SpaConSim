@@ -69,7 +69,7 @@ void SimulationVisuComponent::SetSimulationChannelCount(int channelCount)
 		{
 			if (m_soundObjects.count(i) == 0)
 			{
-				m_soundObjects[i] = std::make_unique<SoundObjectComponent>();
+				m_soundObjects[i] = std::make_unique<SoundObjectComponent>(String(i));
 				addAndMakeVisible(m_soundObjects.at(i).get());
 			}
 		}
@@ -89,6 +89,7 @@ void SimulationVisuComponent::onSimulationUpdated(const std::map<RemoteObjectAdd
 	for (auto const& simValue : simulationValues)
 	{
 		auto const& channel				= simValue.first._first;
+		auto const& record				= simValue.first._second;
 		auto const& remoteObjectsMap	= simValue.second;
 
 		if (m_soundObjects.count(channel) > 0)
@@ -99,38 +100,47 @@ void SimulationVisuComponent::onSimulationUpdated(const std::map<RemoteObjectAdd
 			spVal = 0.0f;
 			dmVal = 0.0f;
 
-			if (remoteObjectsMap.count(ROI_CoordinateMapping_SourcePosition_X) > 0 && !remoteObjectsMap.at(ROI_CoordinateMapping_SourcePosition_X).empty())
+			if (record == 1)
 			{
-				xVal = jmap(remoteObjectsMap.at(ROI_CoordinateMapping_SourcePosition_X).front(),
-					ProcessingEngineConfig::GetRemoteObjectRange(ROI_CoordinateMapping_SourcePosition_X).getStart(),
-					ProcessingEngineConfig::GetRemoteObjectRange(ROI_CoordinateMapping_SourcePosition_X).getEnd(), 0.0f, 1.0f);
-			}
-			if (remoteObjectsMap.count(ROI_CoordinateMapping_SourcePosition_Y) > 0 && !remoteObjectsMap.at(ROI_CoordinateMapping_SourcePosition_Y).empty())
-			{
-				yVal = jmap(remoteObjectsMap.at(ROI_CoordinateMapping_SourcePosition_Y).front(),
-					ProcessingEngineConfig::GetRemoteObjectRange(ROI_CoordinateMapping_SourcePosition_Y).getStart(),
-					ProcessingEngineConfig::GetRemoteObjectRange(ROI_CoordinateMapping_SourcePosition_Y).getEnd(), 0.0f, 1.0f);
-			}
-			if (remoteObjectsMap.count(ROI_MatrixInput_ReverbSendGain) > 0 && !remoteObjectsMap.at(ROI_MatrixInput_ReverbSendGain).empty())
-			{
-				rvVal = jmap(remoteObjectsMap.at(ROI_MatrixInput_ReverbSendGain).front(),
-					ProcessingEngineConfig::GetRemoteObjectRange(ROI_MatrixInput_ReverbSendGain).getStart(),
-					ProcessingEngineConfig::GetRemoteObjectRange(ROI_MatrixInput_ReverbSendGain).getEnd(), 0.0f, 1.0f);
-			}
-			if (remoteObjectsMap.count(ROI_Positioning_SourceSpread) > 0 && !remoteObjectsMap.at(ROI_Positioning_SourceSpread).empty())
-			{
-				spVal = jmap(remoteObjectsMap.at(ROI_Positioning_SourceSpread).front(),
-					ProcessingEngineConfig::GetRemoteObjectRange(ROI_Positioning_SourceSpread).getStart(),
-					ProcessingEngineConfig::GetRemoteObjectRange(ROI_Positioning_SourceSpread).getEnd(), 0.0f, 1.0f);
-			}
-			if (remoteObjectsMap.count(ROI_Positioning_SourceDelayMode) > 0 && !remoteObjectsMap.at(ROI_Positioning_SourceDelayMode).empty())
-			{
-				dmVal = jmap(remoteObjectsMap.at(ROI_Positioning_SourceDelayMode).front(),
-					ProcessingEngineConfig::GetRemoteObjectRange(ROI_Positioning_SourceDelayMode).getStart(),
-					ProcessingEngineConfig::GetRemoteObjectRange(ROI_Positioning_SourceDelayMode).getEnd(), 0.0f, 1.0f);
+				if (remoteObjectsMap.count(ROI_CoordinateMapping_SourcePosition_X) > 0 && !remoteObjectsMap.at(ROI_CoordinateMapping_SourcePosition_X).empty())
+				{
+					xVal = jmap(remoteObjectsMap.at(ROI_CoordinateMapping_SourcePosition_X).front(),
+						ProcessingEngineConfig::GetRemoteObjectRange(ROI_CoordinateMapping_SourcePosition_X).getStart(),
+						ProcessingEngineConfig::GetRemoteObjectRange(ROI_CoordinateMapping_SourcePosition_X).getEnd(), 0.0f, 1.0f);
+				}
+				if (remoteObjectsMap.count(ROI_CoordinateMapping_SourcePosition_Y) > 0 && !remoteObjectsMap.at(ROI_CoordinateMapping_SourcePosition_Y).empty())
+				{
+					yVal = jmap(remoteObjectsMap.at(ROI_CoordinateMapping_SourcePosition_Y).front(),
+						ProcessingEngineConfig::GetRemoteObjectRange(ROI_CoordinateMapping_SourcePosition_Y).getStart(),
+						ProcessingEngineConfig::GetRemoteObjectRange(ROI_CoordinateMapping_SourcePosition_Y).getEnd(), 0.0f, 1.0f);
+				}
+
+				m_soundObjects.at(channel)->updatePosValues(xVal, yVal);
 			}
 
-			m_soundObjects.at(channel)->updateValues(xVal, yVal, rvVal, spVal, dmVal);
+			if (record == INVALID_ADDRESS_VALUE)
+			{
+				if (remoteObjectsMap.count(ROI_MatrixInput_ReverbSendGain) > 0 && !remoteObjectsMap.at(ROI_MatrixInput_ReverbSendGain).empty())
+				{
+					rvVal = jmap(remoteObjectsMap.at(ROI_MatrixInput_ReverbSendGain).front(),
+						ProcessingEngineConfig::GetRemoteObjectRange(ROI_MatrixInput_ReverbSendGain).getStart(),
+						ProcessingEngineConfig::GetRemoteObjectRange(ROI_MatrixInput_ReverbSendGain).getEnd(), 0.0f, 1.0f);
+				}
+				if (remoteObjectsMap.count(ROI_Positioning_SourceSpread) > 0 && !remoteObjectsMap.at(ROI_Positioning_SourceSpread).empty())
+				{
+					spVal = jmap(remoteObjectsMap.at(ROI_Positioning_SourceSpread).front(),
+						ProcessingEngineConfig::GetRemoteObjectRange(ROI_Positioning_SourceSpread).getStart(),
+						ProcessingEngineConfig::GetRemoteObjectRange(ROI_Positioning_SourceSpread).getEnd(), 0.0f, 1.0f);
+				}
+				if (remoteObjectsMap.count(ROI_Positioning_SourceDelayMode) > 0 && !remoteObjectsMap.at(ROI_Positioning_SourceDelayMode).empty())
+				{
+					dmVal = jmap(remoteObjectsMap.at(ROI_Positioning_SourceDelayMode).front(),
+						ProcessingEngineConfig::GetRemoteObjectRange(ROI_Positioning_SourceDelayMode).getStart(),
+						ProcessingEngineConfig::GetRemoteObjectRange(ROI_Positioning_SourceDelayMode).getEnd(), 0.0f, 1.0f);
+				}
+
+				m_soundObjects.at(channel)->updateMetaValues(rvVal, spVal, dmVal);
+			}
 		}
 	}
 }

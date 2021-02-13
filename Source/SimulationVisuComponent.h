@@ -50,14 +50,21 @@ private:
     class SoundObjectComponent : public Component
     {
     public:
-        SoundObjectComponent()
+        SoundObjectComponent(String displayName)
+            : m_displayName(displayName)
         {
         }
 
-        void updateValues(float xVal01, float yVal01, float rvVal01, float spVal01, float dmVal01)
+        void updatePosValues(float xVal01, float yVal01)
         {
             m_xVal01 = xVal01;
             m_yVal01 = yVal01;
+
+            repaint();
+        }
+
+        void updateMetaValues(float rvVal01, float spVal01, float dmVal01)
+        {
             m_rvVal01 = rvVal01;
             m_spVal01 = spVal01;
             m_dmVal01 = dmVal01;
@@ -78,6 +85,10 @@ private:
             auto spFaderArea = rect.removeFromTop(singleFaderHeight);
             auto dmFaderArea = rect.removeFromTop(singleFaderHeight);
 
+            // draw a slightly darker text in background with the sound object number ('displayName')
+            g.setColour(getLookAndFeel().findColour(TextEditor::outlineColourId).darker());
+            g.drawText(m_displayName, xyPadArea.reduced(4), Justification::centred);
+
             // draw a slightly darker frame around the xy pad area
             g.setColour(getLookAndFeel().findColour(TextEditor::outlineColourId).darker());
             // xy pad rectangle
@@ -93,7 +104,10 @@ private:
             // spread fader line
             g.drawLine(spFaderArea.getX(), spFaderArea.getBottom(), spFaderArea.getX() + (spFaderArea.getWidth() * m_spVal01), spFaderArea.getBottom());
             // delaymode toggle line
-            g.drawLine(dmFaderArea.getX(), dmFaderArea.getBottom(), dmFaderArea.getX() + (dmFaderArea.getWidth() * m_dmVal01), dmFaderArea.getBottom());
+            auto widthOneThird = dmFaderArea.getWidth() / 3;
+            auto dmX1 = widthOneThird * (m_dmVal01 * 2);
+            auto dmX2 = widthOneThird * (m_dmVal01 * 2 + 1);
+            g.drawLine(dmFaderArea.getX() + dmX1, dmFaderArea.getBottom(), dmFaderArea.getX() + dmX2, dmFaderArea.getBottom());
         }
 
         float m_xVal01{ 0.5f };
@@ -101,6 +115,8 @@ private:
         float m_rvVal01{ 0.3f };
         float m_spVal01{ 0.5f };
         float m_dmVal01{ 0.7f };
+
+        String m_displayName{ "n" };
     };
     std::map<int, std::unique_ptr<SimulationVisuComponent::SoundObjectComponent>>    m_soundObjects;
 
@@ -108,6 +124,7 @@ private:
     const int _rowHeight{ 40 };
     const int _layoutColumns{ 8 };
     int m_layoutRows{ 4 };
+    String  m_displayName{ "None" };
 
 };
 
