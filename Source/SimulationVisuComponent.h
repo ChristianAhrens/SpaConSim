@@ -87,7 +87,7 @@ private:
             g.setColour(getLookAndFeel().findColour(TextEditor::outlineColourId));
             //xy crosshair lines
             g.drawLine(xyPadArea.getX() + (xyPadArea.getWidth() * m_xVal01), xyPadArea.getY(), xyPadArea.getX() + (xyPadArea.getWidth() * m_xVal01), xyPadArea.getBottom());
-            g.drawLine(xyPadArea.getX(), xyPadArea.getY() + (xyPadArea.getHeight() * m_yVal01), xyPadArea.getWidth(), xyPadArea.getY() + (xyPadArea.getHeight() * m_yVal01));
+            g.drawLine(xyPadArea.getX(), xyPadArea.getBottom() - (xyPadArea.getHeight() * m_yVal01), xyPadArea.getWidth(), xyPadArea.getBottom() - (xyPadArea.getHeight() * m_yVal01));
             // reverb fader line
             g.drawLine(rvFaderArea.getX(), rvFaderArea.getBottom(), rvFaderArea.getX() + (rvFaderArea.getWidth() * m_rvVal01), rvFaderArea.getBottom());
             // spread fader line
