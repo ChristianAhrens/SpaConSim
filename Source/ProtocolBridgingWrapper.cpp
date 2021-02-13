@@ -41,6 +41,10 @@ ProtocolBridgingWrapper::ProtocolBridgingWrapper()
  */
 ProtocolBridgingWrapper::~ProtocolBridgingWrapper()
 {
+	auto oh = dynamic_cast<DS100_DeviceSimulation*>(m_processingNode.GetObjectDataHandling());
+	if (oh)
+		oh->removeListener(this);
+
 	m_listeners.clear();
 }
 
@@ -84,6 +88,10 @@ void ProtocolBridgingWrapper::HandleNodeData(const ProcessingEngineNode::NodeCal
  */
 void ProtocolBridgingWrapper::Disconnect()
 {
+	auto oh = dynamic_cast<DS100_DeviceSimulation*>(m_processingNode.GetObjectDataHandling());
+	if (oh)
+		oh->removeListener(this);
+
 	m_processingNode.Stop();
 }
 
@@ -97,6 +105,11 @@ void ProtocolBridgingWrapper::Reconnect()
 	auto nodeXmlElement = m_bridgingXml.getChildByName(ProcessingEngineConfig::getTagName(ProcessingEngineConfig::TagID::NODE));
 	if (nodeXmlElement)
 		m_processingNode.setStateXml(nodeXmlElement);
+
+	auto oh = dynamic_cast<DS100_DeviceSimulation*>(m_processingNode.GetObjectDataHandling());
+	if (oh)
+		oh->addListener(this);
+
 	m_processingNode.Start();
 }
 
@@ -198,6 +211,17 @@ bool ProtocolBridgingWrapper::SetSimulationRecordCount(int recordCountValue)
 }
 
 /**
+ * Reimplemented from DS100_DeviceSimulation_Listener to be notified of simulation value updates
+ * 
+ * @param	simulationValues	The updated map of object addressing and values
+ */
+void ProtocolBridgingWrapper::simulationUpdated(const std::map<RemoteObjectAddressing, std::map<RemoteObjectIdentifier, std::vector<float>>>& simulationValues)
+{
+	if (onSimulationUpdated)
+		onSimulationUpdated(simulationValues);
+}
+
+/**
  * Method to create a basic configuration to use to setup the single supported
  * bridging node.
  * @param bridgingProtocolsToActivate	Bitmask definition of what bridging protocols to activate in the bridging node about to be created.
@@ -249,6 +273,10 @@ void ProtocolBridgingWrapper::SetupBridgingNode()
 	}
 
 	m_processingNode.setStateXml(nodeXmlElement.get());
+
+	auto oh = dynamic_cast<DS100_DeviceSimulation*>(m_processingNode.GetObjectDataHandling());
+	if (oh)
+		oh->addListener(this);
 
 	m_bridgingXml.addChildElement(nodeXmlElement.release());
 }

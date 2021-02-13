@@ -21,6 +21,7 @@
 #include <JuceHeader.h>
 
 #include "ProtocolBridgingWrapper.h"
+#include "SimulationVisuComponent.h"
 
 
 namespace SoundscapeOSCSim
@@ -102,31 +103,37 @@ private:
     };
 
     //==========================================================================
-    std::unique_ptr<Label>              m_speedSliderLabel;
-    std::unique_ptr<Slider>             m_speedSlider;
+    std::unique_ptr<Label>                      m_speedSliderLabel;
+    std::unique_ptr<Slider>                     m_speedSlider;
     
-    std::unique_ptr<Label>              m_channelSimSelectLabel;
-    std::unique_ptr<ComboBox>           m_channelSimSelect;
+    std::unique_ptr<Label>                      m_channelSimSelectLabel;
+    std::unique_ptr<ComboBox>                   m_channelSimSelect;
     
-    std::unique_ptr<Label>              m_recordSimSelectLabel;
-    std::unique_ptr<ComboBox>           m_recordSimSelect;
+    std::unique_ptr<Label>                      m_recordSimSelectLabel;
+    std::unique_ptr<ComboBox>                   m_recordSimSelect;
 
-    std::unique_ptr<WhiteLineComponent> m_sectionLine1;
+    std::unique_ptr<WhiteLineComponent>         m_sectionLine1;
 
-    std::unique_ptr<Label>              m_appInstanceInfoLabel;
-    std::unique_ptr<DrawableButton>	    m_helpButton;
-    std::unique_ptr<Label>              m_localSystemInterfacesInfoLabel;
-    std::unique_ptr<Label>              m_listeningPortAnnouncedInfoLabel;
-    std::unique_ptr<Label>              m_clientRemotePortInfoLabel;
+    std::unique_ptr<Label>                      m_appInstanceInfoLabel;
+    std::unique_ptr<DrawableButton>	            m_helpButton;
+    std::unique_ptr<Label>                      m_localSystemInterfacesInfoLabel;
+    std::unique_ptr<Label>                      m_listeningPortAnnouncedInfoLabel;
+    std::unique_ptr<Label>                      m_clientRemotePortInfoLabel;
 
-    std::unique_ptr<WhiteLineComponent> m_sectionLine2;
+    std::unique_ptr<WhiteLineComponent>         m_sectionLine2;
+
+    std::unique_ptr<SimulationVisuComponent>    m_simulationVisu;
     
-    std::unique_ptr<Slider>             m_performanceMeter;
+    std::unique_ptr<Slider>                     m_performanceMeter;
 
     std::unique_ptr<ProtocolBridgingWrapper>    m_bridgingWrapper;
     std::uint32_t                               m_bridgingPerformanceInterval{ 400 };
     std::uint64_t                               m_bridgingPerformanceCounter{ 0 };
     std::uint64_t                               m_bridgingPerformanceMaxCount{ 0 };
+
+    const int _rowHeight{ 25 };
+    const int _margin{ 5 };
+    const int _width{ 320 };
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainSoundscapeOSCSimComponent)
 };

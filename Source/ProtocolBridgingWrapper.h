@@ -19,6 +19,7 @@
 #pragma once
 
 #include <ProcessingEngine/ProcessingEngineNode.h>
+#include <ProcessingEngine/ObjectDataHandling/DS100_DeviceSimulation/DS100_DeviceSimulation.h>
 
 #include <JuceHeader.h>
 
@@ -38,7 +39,8 @@ static constexpr int DEFAULT_PROCNODE_ID = 1;
 static constexpr int DS100_1_PROCESSINGPROTOCOL_ID = 2;
 
 class ProtocolBridgingWrapper :
-	public ProcessingEngineNode::NodeListener
+	public ProcessingEngineNode::NodeListener,
+	public DS100_DeviceSimulation::DS100_DeviceSimulation_Listener
 {
 public:
 	/**
@@ -76,6 +78,12 @@ public:
 	bool SetSimulationInterval(int intervalValue);
     bool SetSimulationChannelCount(int channlCountValue);
     bool SetSimulationRecordCount(int recordCountValue);
+
+	//==========================================================================
+	void simulationUpdated(const std::map<RemoteObjectAddressing, std::map<RemoteObjectIdentifier, std::vector<float>>>& simulationValues) override;
+
+	//==============================================================================
+	std::function<void(const std::map<RemoteObjectAddressing, std::map<RemoteObjectIdentifier, std::vector<float>>>&)> onSimulationUpdated;
 
 private:
 	//==========================================================================

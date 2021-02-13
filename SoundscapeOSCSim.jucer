@@ -28,6 +28,10 @@
       <FILE id="Q7vthe" name="README.md" compile="0" resource="1" file="README.md"/>
     </GROUP>
     <GROUP id="{2B9DD386-1093-ADF5-E47F-5954774132B5}" name="Source">
+      <FILE id="cvvSeh" name="SimulationVisuComponent.cpp" compile="1" resource="0"
+            file="Source/SimulationVisuComponent.cpp"/>
+      <FILE id="R5uf14" name="SimulationVisuComponent.h" compile="0" resource="0"
+            file="Source/SimulationVisuComponent.h"/>
       <FILE id="zk9Nsy" name="MainSoundscapeOSCSimComponent.cpp" compile="1"
             resource="0" file="Source/MainSoundscapeOSCSimComponent.cpp"/>
       <FILE id="s55Ijc" name="MainSoundscapeOSCSimComponent.h" compile="0"

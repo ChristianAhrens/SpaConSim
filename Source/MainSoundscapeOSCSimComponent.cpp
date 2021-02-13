@@ -18,8 +18,6 @@
 
 #include "MainSoundscapeOSCSimComponent.h"
 
-#include <JuceHeader.h>
-
 #include "../submodules/JUCE-AppBasics/Source/Image_utils.h"
 
 namespace SoundscapeOSCSim
@@ -85,6 +83,9 @@ MainSoundscapeOSCSimComponent::MainSoundscapeOSCSimComponent()
 
     m_sectionLine2 = std::make_unique<WhiteLineComponent>(WhiteLineComponent::vAlign::Top);
     addAndMakeVisible(m_sectionLine2.get());
+
+    m_simulationVisu = std::make_unique<SimulationVisuComponent>();
+    addAndMakeVisible(m_simulationVisu.get());
     
     m_performanceMeter = std::make_unique<Slider>(Slider::LinearBar, Slider::TextBoxAbove);
     m_performanceMeter->setRange(0, 1, 1);
@@ -94,14 +95,12 @@ MainSoundscapeOSCSimComponent::MainSoundscapeOSCSimComponent()
     addAndMakeVisible(m_performanceMeter.get());
 
     m_bridgingWrapper = std::make_unique<ProtocolBridgingWrapper>();
+    m_bridgingWrapper->onSimulationUpdated = [this](const std::map<RemoteObjectAddressing, std::map<RemoteObjectIdentifier, std::vector<float>>>& simulationValues) { this->m_simulationVisu->onSimulationUpdated(simulationValues); };
     m_bridgingWrapper->AddListener(this);
 
-    auto rowHeight = 25;
-    auto margin = 5;
-    auto width = 320;
-    auto height = 11 * rowHeight + 2 * margin;
+    auto height = 12 * _rowHeight + 2 * _margin + m_simulationVisu->getHeight();
 
-    setSize(width, height);
+    setSize(_width, height);
 
     lookAndFeelChanged();
 
@@ -120,34 +119,34 @@ void MainSoundscapeOSCSimComponent::paint(juce::Graphics& g)
 
 void MainSoundscapeOSCSimComponent::resized()
 {
-    auto rowHeight = 25;
-    auto margin = 5;
-
-    auto bounds = getLocalBounds().reduced(margin, margin);
+    auto bounds = getLocalBounds().reduced(_margin, _margin);
     
-    bounds.removeFromTop(rowHeight);
-    m_speedSlider->setBounds(bounds.removeFromTop(rowHeight));
+    bounds.removeFromTop(_rowHeight);
+    m_speedSlider->setBounds(bounds.removeFromTop(_rowHeight));
     
-    bounds.removeFromTop(rowHeight);
-    auto editorBounds = bounds.removeFromTop(rowHeight);
-    m_channelSimSelect->setBounds(editorBounds.removeFromLeft((bounds.getWidth() / 2) - margin));
-    m_recordSimSelect->setBounds(editorBounds.removeFromRight((bounds.getWidth() / 2) - margin));
+    bounds.removeFromTop(_rowHeight);
+    auto editorBounds = bounds.removeFromTop(_rowHeight);
+    m_channelSimSelect->setBounds(editorBounds.removeFromLeft((bounds.getWidth() / 2) - _margin));
+    m_recordSimSelect->setBounds(editorBounds.removeFromRight((bounds.getWidth() / 2) - _margin));
 
-    m_sectionLine1->setBounds(bounds.removeFromTop(rowHeight));
+    m_sectionLine1->setBounds(bounds.removeFromTop(_rowHeight));
 
-    auto appInfoRowBounds = bounds.removeFromTop(rowHeight);
-    m_helpButton->setBounds(appInfoRowBounds.removeFromRight(rowHeight));
+    auto appInfoRowBounds = bounds.removeFromTop(_rowHeight);
+    m_helpButton->setBounds(appInfoRowBounds.removeFromRight(_rowHeight));
     m_appInstanceInfoLabel->setBounds(appInfoRowBounds);
     
-    m_localSystemInterfacesInfoLabel->setBounds(bounds.removeFromTop(rowHeight));
+    m_localSystemInterfacesInfoLabel->setBounds(bounds.removeFromTop(_rowHeight));
 
-    m_listeningPortAnnouncedInfoLabel->setBounds(bounds.removeFromTop(rowHeight));
+    m_listeningPortAnnouncedInfoLabel->setBounds(bounds.removeFromTop(_rowHeight));
 
-    m_clientRemotePortInfoLabel->setBounds(bounds.removeFromTop(rowHeight));
+    m_clientRemotePortInfoLabel->setBounds(bounds.removeFromTop(_rowHeight));
 
-    m_sectionLine2->setBounds(bounds.removeFromTop(rowHeight));
-    
-    m_performanceMeter->setBounds(bounds.removeFromTop(rowHeight));
+    m_sectionLine2->setBounds(bounds.removeFromTop(_rowHeight));
+
+    m_simulationVisu->setBounds(bounds.removeFromTop(m_simulationVisu->getHeight()));
+
+    bounds.removeFromTop(_rowHeight);
+    m_performanceMeter->setBounds(bounds.removeFromTop(_rowHeight));
 }
 
 void MainSoundscapeOSCSimComponent::lookAndFeelChanged()
@@ -195,11 +194,17 @@ void MainSoundscapeOSCSimComponent::comboBoxChanged (ComboBox* comboBox)
             chCntValue = 32;
         else if (selectedId ==2)
             chCntValue = 64;
-        else if (selectedId == 2)
+        else if (selectedId == 3)
             chCntValue = 128;
         
         if (m_bridgingWrapper)
             m_bridgingWrapper->SetSimulationChannelCount(chCntValue);
+
+        if (m_simulationVisu)
+            m_simulationVisu->SetSimulationChannelCount(chCntValue);
+
+        auto height = 12 * _rowHeight + 2 * _margin + m_simulationVisu->getHeight();
+        setSize(_width, height);
     }
     else if (m_recordSimSelect.get() == comboBox)
     {
