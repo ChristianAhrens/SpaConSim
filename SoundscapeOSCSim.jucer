@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="MFvkL5" name="SoundscapeOSCSim" projectType="guiapp" version="0.1.6"
+<JUCERPROJECT id="MFvkL5" name="SoundscapeOSCSim" projectType="guiapp" version="0.1.7"
               bundleIdentifier="com.ChristianAhrens.SoundscapeOSCSim" companyName="Christian Ahrens"
               companyEmail="christianahrens@me.com" displaySplashScreen="0"
               reportAppUsage="0" companyCopyright="2021" jucerFormatVersion="1"
