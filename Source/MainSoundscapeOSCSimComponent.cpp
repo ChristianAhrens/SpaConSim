@@ -18,7 +18,8 @@
 
 #include "MainSoundscapeOSCSimComponent.h"
 
-#include "../submodules/JUCE-AppBasics/Source/Image_utils.h"
+#include <Image_utils.h>
+#include <iOS_utils.h>
 
 namespace SoundscapeOSCSim
 {
@@ -85,7 +86,9 @@ MainSoundscapeOSCSimComponent::MainSoundscapeOSCSimComponent()
     addAndMakeVisible(m_sectionLine2.get());
 
     m_simulationVisu = std::make_unique<SimulationVisuComponent>();
-    addAndMakeVisible(m_simulationVisu.get());
+    m_simulationViewport = std::make_unique<Viewport>();
+    m_simulationViewport->setViewedComponent(m_simulationVisu.get(), false);
+    addAndMakeVisible(m_simulationViewport.get());  
     
     m_performanceMeter = std::make_unique<Slider>(Slider::LinearBar, Slider::TextBoxAbove);
     m_performanceMeter->setRange(0, 1, 1);
@@ -97,10 +100,13 @@ MainSoundscapeOSCSimComponent::MainSoundscapeOSCSimComponent()
     m_bridgingWrapper = std::make_unique<ProtocolBridgingWrapper>();
     m_bridgingWrapper->onSimulationUpdated = [this](const std::map<RemoteObjectAddressing, std::map<RemoteObjectIdentifier, std::vector<float>>>& simulationValues) { this->m_simulationVisu->onSimulationUpdated(simulationValues); };
     m_bridgingWrapper->AddListener(this);
-
+    
+#if JUCE_IOS || JUCE_ANDROID
+    setSize(_width, _width);
+#else
     auto height = 12 * _rowHeight + 2 * _margin + m_simulationVisu->getHeight();
-
     setSize(_width, height);
+#endif
 
     lookAndFeelChanged();
 
@@ -119,7 +125,14 @@ void MainSoundscapeOSCSimComponent::paint(juce::Graphics& g)
 
 void MainSoundscapeOSCSimComponent::resized()
 {
-    auto bounds = getLocalBounds().reduced(_margin, _margin);
+    auto safety = JUCEAppBasics::iOS_utils::getDeviceSafetyMargins();
+    auto safeBounds = getLocalBounds();
+    safeBounds.removeFromTop(safety._top);
+    safeBounds.removeFromBottom(safety._bottom);
+    safeBounds.removeFromLeft(safety._left);
+    safeBounds.removeFromRight(safety._right);
+    
+    auto bounds = safeBounds.reduced(_margin, _margin);
     
     bounds.removeFromTop(_rowHeight);
     m_speedSlider->setBounds(bounds.removeFromTop(_rowHeight));
@@ -143,10 +156,20 @@ void MainSoundscapeOSCSimComponent::resized()
 
     m_sectionLine2->setBounds(bounds.removeFromTop(_rowHeight));
 
-    m_simulationVisu->setBounds(bounds.removeFromTop(m_simulationVisu->getHeight()));
+    m_performanceMeter->setBounds(bounds.removeFromBottom(_rowHeight));
+    bounds.removeFromBottom(_rowHeight);
 
-    bounds.removeFromTop(_rowHeight);
-    m_performanceMeter->setBounds(bounds.removeFromTop(_rowHeight));
+    auto embeddedVisuBounds = Rectangle<int>(bounds.getWidth(), m_simulationVisu->getHeight());
+    m_simulationVisu->setBounds(embeddedVisuBounds);
+    m_simulationViewport->setBounds(bounds);
+
+    // In case the area of the simulation does not fit into viewport,
+    // the scrollbars are going to appear and to avoid the horizontal one,
+    // we simply shrink the simulation width a bit (it adapts to forced width anyways)
+    if (embeddedVisuBounds.getHeight() > bounds.getHeight())
+        m_simulationVisu->setBounds(Rectangle<int>(
+            embeddedVisuBounds.getWidth() - m_simulationViewport->getVerticalScrollBar().getWidth(), 
+            embeddedVisuBounds.getHeight()));
 }
 
 void MainSoundscapeOSCSimComponent::lookAndFeelChanged()
@@ -203,8 +226,12 @@ void MainSoundscapeOSCSimComponent::comboBoxChanged (ComboBox* comboBox)
         if (m_simulationVisu)
             m_simulationVisu->SetSimulationChannelCount(chCntValue);
 
+#if JUCE_IOS || JUCE_ANDROID
+        resized();
+#else
         auto height = 12 * _rowHeight + 2 * _margin + m_simulationVisu->getHeight();
         setSize(_width, height);
+#endif
     }
     else if (m_recordSimSelect.get() == comboBox)
     {

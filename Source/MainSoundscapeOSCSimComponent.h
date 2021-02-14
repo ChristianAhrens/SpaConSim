@@ -123,6 +123,7 @@ private:
     std::unique_ptr<WhiteLineComponent>         m_sectionLine2;
 
     std::unique_ptr<SimulationVisuComponent>    m_simulationVisu;
+    std::unique_ptr<Viewport>					m_simulationViewport;
     
     std::unique_ptr<Slider>                     m_performanceMeter;
 

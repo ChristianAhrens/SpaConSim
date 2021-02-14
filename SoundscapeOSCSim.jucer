@@ -8,17 +8,9 @@
               companyWebsite="https://github.com/ChristianAhrens/SoundscapeOSCSim">
   <MAINGROUP id="cS7SrP" name="SoundscapeOSCSim">
     <GROUP id="{DA3507CD-D9BE-4153-5873-D44DBA9EAF0C}" name="Resources">
-      <GROUP id="{620F3BAA-2D31-BBC0-F72D-E488D90A0667}" name="Documentation">
-        <FILE id="WyVqZ3" name="Showreel.001.png" compile="0" resource="1"
-              file="Resources/Documentation/Showreel/Showreel.001.png"/>
-        <FILE id="nNdxr6" name="Showreel.002.png" compile="0" resource="1"
-              file="Resources/Documentation/Showreel/Showreel.002.png"/>
-      </GROUP>
       <GROUP id="{864A9574-56E7-F9A8-38E9-07000EF2A9EC}" name="Images">
         <FILE id="kpe1tk" name="SoundscapeOSCSim.png" compile="0" resource="1"
-              file="Resources/Images/SoundscapeOSCSim.png"/>
-        <FILE id="r2gmrr" name="SoundscapeOSCSim.xcf" compile="0" resource="0"
-              file="Resources/Images/SoundscapeOSCSim.xcf"/>
+              file="Resources/Images/SoundscapeOSCSim.png" xcodeResource="1"/>
         <FILE id="tEZIJj" name="SoundscapeOSCSimCanvas.png" compile="0" resource="1"
               file="Resources/Images/SoundscapeOSCSimCanvas.png"/>
         <FILE id="dvNofY" name="SoundscapeOSCSimRect.png" compile="0" resource="1"
@@ -313,6 +305,29 @@
         <MODULEPATH id="juce_audio_devices" path="../../../../../../JUCE/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
+    <XCODE_IPHONE targetFolder="Builds/iOS" smallIcon="tEZIJj" bigIcon="tEZIJj"
+                  iosScreenOrientation="UIInterfaceOrientationLandscapeLeft,UIInterfaceOrientationLandscapeRight,UIInterfaceOrientationPortrait"
+                  iPadScreenOrientation="UIInterfaceOrientationLandscapeLeft,UIInterfaceOrientationLandscapeRight,UIInterfaceOrientationPortrait"
+                  customPList="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#10;&#10;&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;&#10;&lt;plist&gt;&#10;  &lt;dict&gt;&#10;    &lt;key&gt;NSLocalNetworkUsageDescription&lt;/key&gt;&#10;    &lt;string&gt;SoundscapeOSCSim uses bonjour to announce services to devices on the network.&lt;/string&gt;&#10;    &lt;key&gt;NSBonjourServices&lt;/key&gt;&#10;    &lt;array&gt;&#10;&#9;  &lt;string&gt;_osc._udp&lt;/string&gt;&#10;    &lt;/array&gt;&#10;  &lt;/dict&gt;&#10;&lt;/plist&gt;"
+                  iosDevelopmentTeamID="SB7Q3PP4FQ" customLaunchStoryboard="Resources/Deployment/iOS/Launchscreen.storyboard">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug"/>
+        <CONFIGURATION isDebug="0" name="Release"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_osc"/>
+        <MODULEPATH id="juce_opengl"/>
+        <MODULEPATH id="juce_gui_extra"/>
+        <MODULEPATH id="juce_gui_basics"/>
+        <MODULEPATH id="juce_graphics"/>
+        <MODULEPATH id="juce_events"/>
+        <MODULEPATH id="juce_data_structures"/>
+        <MODULEPATH id="juce_core"/>
+        <MODULEPATH id="juce_audio_processors"/>
+        <MODULEPATH id="juce_audio_devices"/>
+        <MODULEPATH id="juce_audio_basics"/>
+      </MODULEPATHS>
+    </XCODE_IPHONE>
   </EXPORTFORMATS>
   <MODULES>
     <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
