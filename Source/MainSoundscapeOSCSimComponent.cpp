@@ -85,7 +85,9 @@ MainSoundscapeOSCSimComponent::MainSoundscapeOSCSimComponent()
     addAndMakeVisible(m_sectionLine2.get());
 
     m_simulationVisu = std::make_unique<SimulationVisuComponent>();
-    addAndMakeVisible(m_simulationVisu.get());
+    m_simulationViewport = std::make_unique<Viewport>();
+    m_simulationViewport->setViewedComponent(m_simulationVisu.get(), false);
+    addAndMakeVisible(m_simulationViewport.get());  
     
     m_performanceMeter = std::make_unique<Slider>(Slider::LinearBar, Slider::TextBoxAbove);
     m_performanceMeter->setRange(0, 1, 1);
@@ -143,10 +145,19 @@ void MainSoundscapeOSCSimComponent::resized()
 
     m_sectionLine2->setBounds(bounds.removeFromTop(_rowHeight));
 
-    m_simulationVisu->setBounds(bounds.removeFromTop(m_simulationVisu->getHeight()));
+    m_performanceMeter->setBounds(bounds.removeFromBottom(_rowHeight));
 
-    bounds.removeFromTop(_rowHeight);
-    m_performanceMeter->setBounds(bounds.removeFromTop(_rowHeight));
+    auto embeddedVisuBounds = Rectangle<int>(bounds.getWidth(), m_simulationVisu->getHeight());
+    m_simulationVisu->setBounds(embeddedVisuBounds);
+    m_simulationViewport->setBounds(bounds);
+
+    // In case the area of the simulation does not fit into viewport,
+    // the scrollbars are going to appear and to avoid the horizontal one,
+    // we simply shrink the simulation width a bit (it adapts to forced width anyways)
+    if (embeddedVisuBounds.getHeight() > bounds.getHeight())
+        m_simulationVisu->setBounds(Rectangle<int>(
+            embeddedVisuBounds.getWidth() - m_simulationViewport->getVerticalScrollBar().getWidth(), 
+            embeddedVisuBounds.getHeight()));
 }
 
 void MainSoundscapeOSCSimComponent::lookAndFeelChanged()
