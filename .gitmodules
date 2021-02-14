@@ -7,3 +7,6 @@
 [submodule "submodules/RemoteProtocolBridgeCore"]
 	path = submodules/RemoteProtocolBridgeCore
 	url = http://github.com/ChristianAhrens/RemoteProtocolBridgeCore
+[submodule "submodules/create-dmg"]
+	path = submodules/create-dmg
+	url = https://github.com/create-dmg/create-dmg

@@ -12,7 +12,7 @@ echo "Using AppleId $NotarizationUser and bundle name $AppBundleId for notarizat
 # set convenience variables
 JUCEDir=/Applications/JUCE
 ProjucerPath="$JUCEDir"/Projucer.app/Contents/MacOS/Projucer
-JucerProjectPath=SoundscapeBridgeApp.jucer
+JucerProjectPath=SoundscapeOSCSim.jucer
 XCodeProjectPath=Builds/MacOSX/SoundscapeOSCSim.xcodeproj
 AppBundlePath=Builds/MacOSX/build/Release
 CreateDmgPath=submodules/create-dmg/create-dmg
