@@ -18,7 +18,8 @@
 
 #include "MainSoundscapeOSCSimComponent.h"
 
-#include "../submodules/JUCE-AppBasics/Source/Image_utils.h"
+#include <Image_utils.h>
+#include <iOS_utils.h>
 
 namespace SoundscapeOSCSim
 {
@@ -99,10 +100,13 @@ MainSoundscapeOSCSimComponent::MainSoundscapeOSCSimComponent()
     m_bridgingWrapper = std::make_unique<ProtocolBridgingWrapper>();
     m_bridgingWrapper->onSimulationUpdated = [this](const std::map<RemoteObjectAddressing, std::map<RemoteObjectIdentifier, std::vector<float>>>& simulationValues) { this->m_simulationVisu->onSimulationUpdated(simulationValues); };
     m_bridgingWrapper->AddListener(this);
-
+    
+#if JUCE_IOS || JUCE_ANDROID
+    setSize(_width, _width);
+#else
     auto height = 12 * _rowHeight + 2 * _margin + m_simulationVisu->getHeight();
-
     setSize(_width, height);
+#endif
 
     lookAndFeelChanged();
 
@@ -121,7 +125,14 @@ void MainSoundscapeOSCSimComponent::paint(juce::Graphics& g)
 
 void MainSoundscapeOSCSimComponent::resized()
 {
-    auto bounds = getLocalBounds().reduced(_margin, _margin);
+    auto safety = JUCEAppBasics::iOS_utils::getDeviceSafetyMargins();
+    auto safeBounds = getLocalBounds();
+    safeBounds.removeFromTop(safety._top);
+    safeBounds.removeFromBottom(safety._bottom);
+    safeBounds.removeFromLeft(safety._left);
+    safeBounds.removeFromRight(safety._right);
+    
+    auto bounds = safeBounds.reduced(_margin, _margin);
     
     bounds.removeFromTop(_rowHeight);
     m_speedSlider->setBounds(bounds.removeFromTop(_rowHeight));
@@ -146,6 +157,7 @@ void MainSoundscapeOSCSimComponent::resized()
     m_sectionLine2->setBounds(bounds.removeFromTop(_rowHeight));
 
     m_performanceMeter->setBounds(bounds.removeFromBottom(_rowHeight));
+    bounds.removeFromBottom(_rowHeight);
 
     auto embeddedVisuBounds = Rectangle<int>(bounds.getWidth(), m_simulationVisu->getHeight());
     m_simulationVisu->setBounds(embeddedVisuBounds);
@@ -214,8 +226,12 @@ void MainSoundscapeOSCSimComponent::comboBoxChanged (ComboBox* comboBox)
         if (m_simulationVisu)
             m_simulationVisu->SetSimulationChannelCount(chCntValue);
 
+#if JUCE_IOS || JUCE_ANDROID
+        resized();
+#else
         auto height = 12 * _rowHeight + 2 * _margin + m_simulationVisu->getHeight();
         setSize(_width, height);
+#endif
     }
     else if (m_recordSimSelect.get() == comboBox)
     {
