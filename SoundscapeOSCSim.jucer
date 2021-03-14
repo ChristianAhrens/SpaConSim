@@ -128,6 +128,12 @@
                     file="submodules/RemoteProtocolBridgeCore/Source/ProcessingEngine/ProtocolProcessor/ProtocolProcessorBase.h"/>
             </GROUP>
             <GROUP id="{9D215695-DE2B-0FE0-E3C4-FCD0911E9150}" name="ObjectDataHandling">
+              <GROUP id="{6DA50019-6E9C-3300-A2C2-141649C287F6}" name="Mirror_dualA_withValFilter">
+                <FILE id="IH7CZM" name="Mirror_dualA_withValFilter.cpp" compile="1"
+                      resource="0" file="submodules/RemoteProtocolBridgeCore/Source/ProcessingEngine/ObjectDataHandling/Mirror_dualA_withValFilter/Mirror_dualA_withValFilter.cpp"/>
+                <FILE id="tyqUSZ" name="Mirror_dualA_withValFilter.h" compile="0" resource="0"
+                      file="submodules/RemoteProtocolBridgeCore/Source/ProcessingEngine/ObjectDataHandling/Mirror_dualA_withValFilter/Mirror_dualA_withValFilter.h"/>
+              </GROUP>
               <GROUP id="{79238D85-06CB-784B-4124-C9D8E7D1BE80}" name="BypassHandling">
                 <FILE id="GJlROA" name="BypassHandling.cpp" compile="1" resource="0"
                       file="submodules/RemoteProtocolBridgeCore/Source/ProcessingEngine/ObjectDataHandling/BypassHandling/BypassHandling.cpp"/>
