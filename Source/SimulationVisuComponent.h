@@ -31,16 +31,27 @@ namespace SoundscapeOSCSim
  */
 class SimulationVisuComponent : public Component
 {
+public:	
+    enum VisibleType
+    {
+        VT_None,
+        VT_SoundObject,
+        VT_MatrixInput,
+        VT_MatrixOutput
+    };
+
 public:
     SimulationVisuComponent();
     ~SimulationVisuComponent() override;
 
     //==========================================================================
-    void paint(juce::Graphics& g) override;
-    void resized() override;
+    void SetSimulationChannelCount(int channlCount);
+    void SetVisibleType(VisibleType type);
+    void Clear();
 
     //==========================================================================
-    void SetSimulationChannelCount(int channlCount);
+    void paint(juce::Graphics& g) override;
+    void resized() override;
 
     //==============================================================================
     void onSimulationUpdated(const std::map<RemoteObjectAddressing, std::map<RemoteObjectIdentifier, std::vector<float>>>& simulationValues);
@@ -120,11 +131,93 @@ private:
     };
     std::map<int, std::unique_ptr<SimulationVisuComponent::SoundObjectComponent>>    m_soundObjects;
 
+    //==========================================================================
+    class MatrixIOComponent : public Component
+    {
+    public:
+        MatrixIOComponent(String displayName)
+            : m_displayName(displayName)
+        {
+        }
+
+        void updateValues(float levelVal01, float gainVal01, float muteVal01)
+        {
+            m_lVal01 = levelVal01;
+            m_gVal01 = gainVal01;
+            m_mVal01 = muteVal01;
+
+            repaint();
+        }
+
+        void paint(juce::Graphics& g) override
+        {
+            auto rect = getLocalBounds().reduced(2);
+
+            auto channelstripAreaWidth = rect.getHeight() * 0.6f;
+            auto lefRightMargin = static_cast<int>(0.5f * (rect.getWidth() - channelstripAreaWidth));
+            auto controlsAreaHeight = rect.getHeight() * 0.4f;
+
+            rect.removeFromLeft(lefRightMargin);
+            rect.removeFromRight(lefRightMargin);
+            auto channelstripArea = rect;
+
+            // draw a slightly darker frame around the channelstriop area
+            g.setColour(getLookAndFeel().findColour(TextEditor::outlineColourId).darker());
+            // surronding channelstrip rectangle
+            g.drawRect(channelstripArea);
+
+            channelstripArea.reduce(2, 2);
+            auto muteButtonRect = channelstripArea.removeFromBottom(channelstripArea.getWidth() / 2).reduced(2);
+            auto levelMeterRect = channelstripArea.removeFromLeft(channelstripArea.getWidth() / 2).reduced(2);
+            auto backgroundNumberRect = channelstripArea;
+            auto gainFaderRect = channelstripArea.reduced(2);
+
+            // draw a slightly darker text in background with the sound object number ('displayName')
+            g.setColour(getLookAndFeel().findColour(TextEditor::outlineColourId).darker());
+            g.drawText(m_displayName, backgroundNumberRect, Justification::centred);
+
+            // draw the levelmeter and mute button areas in a slightly darker outline colour
+            g.setColour(getLookAndFeel().findColour(TextEditor::outlineColourId).darker());
+            //levelmeter and mute button rects
+            g.drawRect(levelMeterRect);
+            g.drawRect(muteButtonRect);
+            
+            // fill the levelmeter, mutebutton and draw the gain fader in outline colour
+            g.setColour(getLookAndFeel().findColour(TextEditor::outlineColourId));
+            
+            // level meter fill
+            auto levelMeterFillRect = levelMeterRect.reduced(1);
+            g.fillRect(levelMeterFillRect.removeFromBottom(levelMeterFillRect.getHeight() * m_lVal01));
+
+            // mute button fill
+            auto muteButtonFillRect = muteButtonRect.reduced(1);
+            if (m_mVal01 > 0.5f)
+                g.fillRect(muteButtonFillRect);
+
+            // gain fader
+            auto valueYPosition = gainFaderRect.getBottom() - (gainFaderRect.getHeight() * m_gVal01);
+            g.drawLine(gainFaderRect.getCentreX(), gainFaderRect.getBottom(), gainFaderRect.getCentreX(), valueYPosition);
+            g.drawLine(gainFaderRect.getX(), valueYPosition,      gainFaderRect.getRight(), valueYPosition);
+            g.drawLine(gainFaderRect.getX(), valueYPosition + 1,  gainFaderRect.getRight(), valueYPosition + 1);
+            g.drawLine(gainFaderRect.getX(), valueYPosition - 1,  gainFaderRect.getRight(), valueYPosition - 1);
+        }
+
+        float m_lVal01{ 0.5f };
+        float m_gVal01{ 0.5f };
+        float m_mVal01{ 1.0f };
+
+        String m_displayName{ "n" };
+    };
+    std::map<int, std::unique_ptr<SimulationVisuComponent::MatrixIOComponent>>    m_matrixInputs;
+    std::map<int, std::unique_ptr<SimulationVisuComponent::MatrixIOComponent>>    m_matrixOutputs;
+
     const int _width{ 310 };
     const int _rowHeight{ 40 };
     const int _layoutColumns{ 8 };
     int m_layoutRows{ 4 };
     String  m_displayName{ "None" };
+    VisibleType m_currentVisibleType{ VT_None };
+    
 
 };
 

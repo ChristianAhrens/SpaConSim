@@ -23,9 +23,12 @@
 #include "ProtocolBridgingWrapper.h"
 #include "SimulationVisuComponent.h"
 
+#include "../submodules/JUCE-AppBasics/Source/SplitButtonComponent.h"
+
 
 namespace SoundscapeOSCSim
 {
+
 
 //==============================================================================
 /*
@@ -34,6 +37,7 @@ class MainSoundscapeOSCSimComponent :   public juce::Component,
                                         public ProtocolBridgingWrapper::Listener,
                                         public Slider::Listener,
                                         public ComboBox::Listener,
+                                        public JUCEAppBasics::SplitButtonComponent::Listener,
                                         public Timer
 {
 public:
@@ -55,6 +59,9 @@ public:
     
     //==========================================================================
     void comboBoxChanged (ComboBox* comboBox) override;
+
+    //==========================================================================
+    void buttonClicked(JUCEAppBasics::SplitButtonComponent* button, std::uint64_t buttonId) override;
 
     //==========================================================================
     void timerCallback() override;
@@ -103,6 +110,9 @@ private:
     };
 
     //==========================================================================
+    int getSummedUpHeight();
+
+    //==========================================================================
     std::unique_ptr<Label>                      m_speedSliderLabel;
     std::unique_ptr<Slider>                     m_speedSlider;
     
@@ -122,8 +132,10 @@ private:
 
     std::unique_ptr<WhiteLineComponent>         m_sectionLine2;
 
-    std::unique_ptr<SimulationVisuComponent>    m_simulationVisu;
-    std::unique_ptr<Viewport>					m_simulationViewport;
+    std::unique_ptr<JUCEAppBasics::SplitButtonComponent>            m_simulationVisuTypeButton;
+    std::map<std::uint64_t, SimulationVisuComponent::VisibleType>   m_simulationVisuTypeButtonIds;
+    std::unique_ptr<SimulationVisuComponent>                        m_simulationVisu;
+    std::unique_ptr<Viewport>					                    m_simulationViewport;
     
     std::unique_ptr<Slider>                     m_performanceMeter;
 

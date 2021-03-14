@@ -49,10 +49,30 @@ void SimulationVisuComponent::resized()
 	for (int i = 0; i < m_layoutRows; i++)
 		grid.templateRows.add(Grid::TrackInfo(1_fr));
 
-    for (auto const& so : m_soundObjects)
-    {
-        grid.items.add(GridItem(so.second.get()));
-    }
+	switch (m_currentVisibleType)
+	{
+	case VT_SoundObject:
+		for (auto const& so : m_soundObjects)
+		{
+			grid.items.add(GridItem(so.second.get()));
+		}
+		break;
+	case VT_MatrixInput:
+		for (auto const& mi : m_matrixInputs)
+		{
+			grid.items.add(GridItem(mi.second.get()));
+		}
+		break;
+	case VT_MatrixOutput:
+		for (auto const& mo : m_matrixOutputs)
+		{
+			grid.items.add(GridItem(mo.second.get()));
+		}
+		break;
+	case VT_None:
+	default:
+		break;
+	}
 
     grid.performLayout(getLocalBounds());
 }
@@ -63,7 +83,9 @@ void SimulationVisuComponent::SetSimulationChannelCount(int channelCount)
 
 	setSize(_width, _rowHeight * m_layoutRows);
 
-	if (m_soundObjects.size() != channelCount)
+	auto resizeReq = false;
+
+	if (m_currentVisibleType == VT_SoundObject && m_soundObjects.size() != channelCount)
 	{
 		for (int i = 1; i <= channelCount; i++)
 		{
@@ -74,8 +96,61 @@ void SimulationVisuComponent::SetSimulationChannelCount(int channelCount)
 			}
 		}
 
-		resized();
+		resizeReq = true;
 	}
+
+	if (m_currentVisibleType == VT_MatrixInput && m_matrixInputs.size() != channelCount)
+	{
+		for (int i = 1; i <= channelCount; i++)
+		{
+			if (m_matrixInputs.count(i) == 0)
+			{
+				m_matrixInputs[i] = std::make_unique<MatrixIOComponent>(String(i));
+				addAndMakeVisible(m_matrixInputs.at(i).get());
+			}
+		}
+
+		resizeReq = true;
+	}
+
+	if (m_currentVisibleType == VT_MatrixOutput && m_matrixOutputs.size() != channelCount)
+	{
+		for (int i = 1; i <= channelCount; i++)
+		{
+			if (m_matrixOutputs.count(i) == 0)
+			{
+				m_matrixOutputs[i] = std::make_unique<MatrixIOComponent>(String(i));
+				addAndMakeVisible(m_matrixOutputs.at(i).get());
+			}
+		}
+
+		resizeReq = true;
+	}
+
+	if (resizeReq)
+		resized();
+}
+
+void SimulationVisuComponent::SetVisibleType(VisibleType type)
+{
+	m_currentVisibleType = type;
+
+	resized();
+}
+
+void SimulationVisuComponent::Clear()
+{
+	for (auto const& so : m_soundObjects)
+		removeChildComponent(so.second.get());
+	m_soundObjects.clear();
+
+	for (auto const& mi : m_matrixInputs)
+		removeChildComponent(mi.second.get());
+	m_matrixInputs.clear();
+
+	for (auto const& mo : m_matrixOutputs)
+		removeChildComponent(mo.second.get());
+	m_matrixOutputs.clear();
 }
 
 void SimulationVisuComponent::onSimulationUpdated(const std::map<RemoteObjectAddressing, std::map<RemoteObjectIdentifier, std::vector<float>>>& simulationValues)
@@ -85,6 +160,9 @@ void SimulationVisuComponent::onSimulationUpdated(const std::map<RemoteObjectAdd
 	float rvVal = 0.0f;
 	float spVal = 0.0f;
 	float dmVal = 0.0f;
+	float levelVal = 0.0f;
+	float gainVal = 0.0f;
+	float muteVal = 0.0f;
 
 	for (auto const& simValue : simulationValues)
 	{
@@ -94,10 +172,10 @@ void SimulationVisuComponent::onSimulationUpdated(const std::map<RemoteObjectAdd
 
 		if (m_soundObjects.count(channel) > 0)
 		{
-			xVal = 0.0f;
-			yVal = 0.0f;
+			xVal = 0.5f;
+			yVal = 0.5f;
 			rvVal = 0.0f;
-			spVal = 0.0f;
+			spVal = 0.5f;
 			dmVal = 0.0f;
 
 			if (record == 1)
@@ -140,6 +218,68 @@ void SimulationVisuComponent::onSimulationUpdated(const std::map<RemoteObjectAdd
 				}
 
 				m_soundObjects.at(channel)->updateMetaValues(rvVal, spVal, dmVal);
+			}
+		}
+
+		if (m_matrixInputs.count(channel) > 0)
+		{
+			levelVal = 0.4f;
+			gainVal = 0.4f;
+			muteVal = 1.0f;
+
+			if (record == INVALID_ADDRESS_VALUE)
+			{
+				if (remoteObjectsMap.count(ROI_MatrixInput_LevelMeterPreMute) > 0 && !remoteObjectsMap.at(ROI_MatrixInput_LevelMeterPreMute).empty())
+				{
+					levelVal = jmap(remoteObjectsMap.at(ROI_MatrixInput_LevelMeterPreMute).front(),
+						ProcessingEngineConfig::GetRemoteObjectRange(ROI_MatrixInput_LevelMeterPreMute).getStart(),
+						ProcessingEngineConfig::GetRemoteObjectRange(ROI_MatrixInput_LevelMeterPreMute).getEnd(), 0.0f, 1.0f);
+				}
+				if (remoteObjectsMap.count(ROI_MatrixInput_Gain) > 0 && !remoteObjectsMap.at(ROI_MatrixInput_Gain).empty())
+				{
+					gainVal = jmap(remoteObjectsMap.at(ROI_MatrixInput_Gain).front(),
+						ProcessingEngineConfig::GetRemoteObjectRange(ROI_MatrixInput_Gain).getStart(),
+						ProcessingEngineConfig::GetRemoteObjectRange(ROI_MatrixInput_Gain).getEnd(), 0.0f, 1.0f);
+				}
+				if (remoteObjectsMap.count(ROI_MatrixInput_Mute) > 0 && !remoteObjectsMap.at(ROI_MatrixInput_Mute).empty())
+				{
+					muteVal = jmap(remoteObjectsMap.at(ROI_MatrixInput_Mute).front(),
+						ProcessingEngineConfig::GetRemoteObjectRange(ROI_MatrixInput_Mute).getStart(),
+						ProcessingEngineConfig::GetRemoteObjectRange(ROI_MatrixInput_Mute).getEnd(), 0.0f, 1.0f);
+				}
+
+				m_matrixInputs.at(channel)->updateValues(levelVal, gainVal, muteVal);
+			}
+		}
+
+		if (m_matrixOutputs.count(channel) > 0)
+		{
+			levelVal = 0.6f;
+			gainVal = 0.6f;
+			muteVal = 0.0f;
+
+			if (record == INVALID_ADDRESS_VALUE)
+			{
+				if (remoteObjectsMap.count(ROI_MatrixOutput_LevelMeterPostMute) > 0 && !remoteObjectsMap.at(ROI_MatrixOutput_LevelMeterPostMute).empty())
+				{
+					levelVal = jmap(remoteObjectsMap.at(ROI_MatrixOutput_LevelMeterPostMute).front(),
+						ProcessingEngineConfig::GetRemoteObjectRange(ROI_MatrixOutput_LevelMeterPostMute).getStart(),
+						ProcessingEngineConfig::GetRemoteObjectRange(ROI_MatrixOutput_LevelMeterPostMute).getEnd(), 0.0f, 1.0f);
+				}
+				if (remoteObjectsMap.count(ROI_MatrixOutput_Gain) > 0 && !remoteObjectsMap.at(ROI_MatrixOutput_Gain).empty())
+				{
+					gainVal = jmap(remoteObjectsMap.at(ROI_MatrixOutput_Gain).front(),
+						ProcessingEngineConfig::GetRemoteObjectRange(ROI_MatrixOutput_Gain).getStart(),
+						ProcessingEngineConfig::GetRemoteObjectRange(ROI_MatrixOutput_Gain).getEnd(), 0.0f, 1.0f);
+				}
+				if (remoteObjectsMap.count(ROI_MatrixInput_Mute) > 0 && !remoteObjectsMap.at(ROI_MatrixInput_Mute).empty())
+				{
+					muteVal = jmap(remoteObjectsMap.at(ROI_MatrixOutput_Mute).front(),
+						ProcessingEngineConfig::GetRemoteObjectRange(ROI_MatrixOutput_Mute).getStart(),
+						ProcessingEngineConfig::GetRemoteObjectRange(ROI_MatrixOutput_Mute).getEnd(), 0.0f, 1.0f);
+				}
+
+				m_matrixOutputs.at(channel)->updateValues(levelVal, gainVal, muteVal);
 			}
 		}
 	}
