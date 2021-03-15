@@ -155,7 +155,6 @@ private:
 
             auto channelstripAreaWidth = rect.getHeight() * 0.6f;
             auto lefRightMargin = static_cast<int>(0.5f * (rect.getWidth() - channelstripAreaWidth));
-            auto controlsAreaHeight = rect.getHeight() * 0.4f;
 
             rect.removeFromLeft(lefRightMargin);
             rect.removeFromRight(lefRightMargin);
@@ -187,7 +186,8 @@ private:
             
             // level meter fill
             auto levelMeterFillRect = levelMeterRect.reduced(1);
-            g.fillRect(levelMeterFillRect.removeFromBottom(levelMeterFillRect.getHeight() * m_lVal01));
+            auto levelMeterValuePos = static_cast<float>(levelMeterFillRect.getHeight()) * m_lVal01;
+            g.fillRect(levelMeterFillRect.removeFromBottom(static_cast<int>(levelMeterValuePos)));
 
             // mute button fill
             auto muteButtonFillRect = muteButtonRect.reduced(1);
@@ -195,7 +195,8 @@ private:
                 g.fillRect(muteButtonFillRect);
 
             // gain fader
-            auto valueYPosition = gainFaderRect.getBottom() - (gainFaderRect.getHeight() * m_gVal01);
+            auto gainFaderValuePos = static_cast<float>(gainFaderRect.getHeight()) * m_gVal01;
+            auto valueYPosition = static_cast<float>(gainFaderRect.getBottom()) - gainFaderValuePos;
             g.drawLine(gainFaderRect.getCentreX(), gainFaderRect.getBottom(), gainFaderRect.getCentreX(), valueYPosition);
             g.drawLine(gainFaderRect.getX(), valueYPosition,      gainFaderRect.getRight(), valueYPosition);
             g.drawLine(gainFaderRect.getX(), valueYPosition + 1,  gainFaderRect.getRight(), valueYPosition + 1);
