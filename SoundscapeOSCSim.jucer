@@ -267,6 +267,10 @@
                 resource="0" file="submodules/JUCE-AppBasics/Source/MidiCommandRangeAssignment.cpp"/>
           <FILE id="KzDXwM" name="MidiCommandRangeAssignment.h" compile="0" resource="0"
                 file="submodules/JUCE-AppBasics/Source/MidiCommandRangeAssignment.h"/>
+          <FILE id="oGEJvm" name="SplitButtonComponent.cpp" compile="1" resource="0"
+                file="submodules/JUCE-AppBasics/Source/SplitButtonComponent.cpp"/>
+          <FILE id="mKyPS0" name="SplitButtonComponent.h" compile="0" resource="0"
+                file="submodules/JUCE-AppBasics/Source/SplitButtonComponent.h"/>
         </GROUP>
       </GROUP>
     </GROUP>

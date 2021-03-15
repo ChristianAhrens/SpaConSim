@@ -85,7 +85,16 @@ MainSoundscapeOSCSimComponent::MainSoundscapeOSCSimComponent()
     m_sectionLine2 = std::make_unique<WhiteLineComponent>(WhiteLineComponent::vAlign::Top);
     addAndMakeVisible(m_sectionLine2.get());
 
+    m_simulationVisuTypeButton = std::make_unique<JUCEAppBasics::SplitButtonComponent>();
+    m_simulationVisuTypeButtonIds[m_simulationVisuTypeButton->addButton("Soundobjects")] = SimulationVisuComponent::VT_SoundObject;
+    m_simulationVisuTypeButtonIds[m_simulationVisuTypeButton->addButton("Matrix Inputs")] = SimulationVisuComponent::VT_MatrixInput;
+    m_simulationVisuTypeButtonIds[m_simulationVisuTypeButton->addButton("Matrix Outputs")] = SimulationVisuComponent::VT_MatrixOutput;
+    m_simulationVisuTypeButton->setButtonDown("Soundobjects");
+    m_simulationVisuTypeButton->addListener(this);
+    addAndMakeVisible(m_simulationVisuTypeButton.get());
+
     m_simulationVisu = std::make_unique<SimulationVisuComponent>();
+    m_simulationVisu->SetVisibleType(SimulationVisuComponent::VT_SoundObject);
     m_simulationViewport = std::make_unique<Viewport>();
     m_simulationViewport->setViewedComponent(m_simulationVisu.get(), false);
     addAndMakeVisible(m_simulationViewport.get());  
@@ -104,7 +113,7 @@ MainSoundscapeOSCSimComponent::MainSoundscapeOSCSimComponent()
 #if JUCE_IOS || JUCE_ANDROID
     setSize(_width, _width);
 #else
-    auto height = 12 * _rowHeight + 2 * _margin + m_simulationVisu->getHeight();
+    auto height = getSummedUpHeight();
     setSize(_width, height);
 #endif
 
@@ -155,6 +164,8 @@ void MainSoundscapeOSCSimComponent::resized()
     m_clientRemotePortInfoLabel->setBounds(bounds.removeFromTop(_rowHeight));
 
     m_sectionLine2->setBounds(bounds.removeFromTop(_rowHeight));
+
+    m_simulationVisuTypeButton->setBounds(bounds.removeFromTop(_rowHeight));
 
     m_performanceMeter->setBounds(bounds.removeFromBottom(_rowHeight));
     bounds.removeFromBottom(_rowHeight);
@@ -229,7 +240,7 @@ void MainSoundscapeOSCSimComponent::comboBoxChanged (ComboBox* comboBox)
 #if JUCE_IOS || JUCE_ANDROID
         resized();
 #else
-        auto height = 12 * _rowHeight + 2 * _margin + m_simulationVisu->getHeight();
+        auto height = getSummedUpHeight();
         setSize(_width, height);
 #endif
     }
@@ -244,6 +255,27 @@ void MainSoundscapeOSCSimComponent::comboBoxChanged (ComboBox* comboBox)
 
         if (m_bridgingWrapper)
             m_bridgingWrapper->SetSimulationRecordCount(recCntValue);
+    }
+}
+
+void MainSoundscapeOSCSimComponent::buttonClicked(JUCEAppBasics::SplitButtonComponent* button, std::uint64_t buttonId)
+{
+    ignoreUnused(button);
+
+    auto chCntValue = 0;
+    auto selectedId = m_channelSimSelect->getSelectedId();
+    if (selectedId == 1)
+        chCntValue = 32;
+    else if (selectedId == 2)
+        chCntValue = 64;
+    else if (selectedId == 3)
+        chCntValue = 128;
+
+    if (m_simulationVisu)
+    {
+        m_simulationVisu->Clear();
+        m_simulationVisu->SetVisibleType(m_simulationVisuTypeButtonIds[buttonId]);
+        m_simulationVisu->SetSimulationChannelCount(chCntValue);
     }
 }
 
@@ -264,5 +296,11 @@ void MainSoundscapeOSCSimComponent::timerCallback()
 
     m_bridgingPerformanceCounter = 0;
 }
+
+int MainSoundscapeOSCSimComponent::getSummedUpHeight()
+{
+    return 13 * _rowHeight + 2 * _margin + m_simulationVisu->getHeight();
+}
+
 
 }
