@@ -97,7 +97,7 @@ private:
             auto dmFaderArea = rect.removeFromTop(singleFaderHeight);
 
             // draw a slightly darker text in background with the sound object number ('displayName')
-            g.setColour(getLookAndFeel().findColour(TextEditor::outlineColourId).darker());
+            g.setColour(getLookAndFeel().findColour(Slider::backgroundColourId));
             g.drawText(m_displayName, xyPadArea.reduced(4), Justification::centred);
 
             // draw a slightly darker frame around the xy pad area
@@ -167,12 +167,12 @@ private:
 
             channelstripArea.reduce(2, 2);
             auto muteButtonRect = channelstripArea.removeFromBottom(channelstripArea.getWidth() / 2).reduced(2);
-            auto levelMeterRect = channelstripArea.removeFromLeft(channelstripArea.getWidth() / 2).reduced(2);
             auto backgroundNumberRect = channelstripArea;
+            auto levelMeterRect = channelstripArea.removeFromLeft(channelstripArea.getWidth() / 2).reduced(2);
             auto gainFaderRect = channelstripArea.reduced(2);
 
             // draw a slightly darker text in background with the sound object number ('displayName')
-            g.setColour(getLookAndFeel().findColour(TextEditor::outlineColourId).darker());
+            g.setColour(getLookAndFeel().findColour(Slider::backgroundColourId));
             g.drawText(m_displayName, backgroundNumberRect, Justification::centred);
 
             // draw the levelmeter and mute button areas in a slightly darker outline colour
