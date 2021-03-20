@@ -1,6 +1,6 @@
 /* Copyright (c) 2021, Christian Ahrens
  *
- * This file is part of SoundscapeOSCSim <https://github.com/ChristianAhrens/SoundscapeOSCSim>
+ * This file is part of SpaConSim <https://github.com/ChristianAhrens/SpaConSim>
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License version 3.0 as published
@@ -19,7 +19,7 @@
 #include "SimulationVisuComponent.h"
 
 
-namespace SoundscapeOSCSim
+namespace SpaConSim
 {
 
 //==============================================================================

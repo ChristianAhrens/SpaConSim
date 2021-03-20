@@ -19,7 +19,7 @@
 #include "ProtocolBridgingWrapper.h"
 
 
-namespace SoundscapeOSCSim
+namespace SpaConSim
 {
 
 /**
@@ -27,7 +27,7 @@ namespace SoundscapeOSCSim
  */
 ProtocolBridgingWrapper::ProtocolBridgingWrapper()
 	:   m_servus("_osc._udp"),
-        m_bridgingXml("SoundscapeOSCSim")
+        m_bridgingXml("SpaConSim")
 {
 	SetupBridgingNode();
     

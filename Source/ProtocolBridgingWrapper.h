@@ -25,7 +25,7 @@
 
 #include <servus/servus.h>
 
-namespace SoundscapeOSCSim
+namespace SpaConSim
 {
 
 static constexpr int RX_PORT_DS100_DEVICE = 50010;		//< UDP port which the DS100 is listening to for OSC

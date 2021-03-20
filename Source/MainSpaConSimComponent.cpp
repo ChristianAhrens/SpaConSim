@@ -1,6 +1,6 @@
 /* Copyright (c) 2020-2021, Christian Ahrens
  *
- * This file is part of SoundscapeOSCSim <https://github.com/ChristianAhrens/SoundscapeOSCSim>
+ * This file is part of SpaConSim <https://github.com/ChristianAhrens/SpaConSim>
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License version 3.0 as published
@@ -16,16 +16,16 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include "MainSoundscapeOSCSimComponent.h"
+#include "MainSpaConSimComponent.h"
 
 #include <Image_utils.h>
 #include <iOS_utils.h>
 
-namespace SoundscapeOSCSim
+namespace SpaConSim
 {
 
 //==============================================================================
-MainSoundscapeOSCSimComponent::MainSoundscapeOSCSimComponent()
+MainSpaConSimComponent::MainSpaConSimComponent()
 {
     m_speedSlider  = std::make_unique<Slider>(Slider::LinearHorizontal, Slider::TextBoxRight);
     m_speedSlider->setRange(0, 1000, 5);
@@ -122,17 +122,17 @@ MainSoundscapeOSCSimComponent::MainSoundscapeOSCSimComponent()
     startTimer(m_bridgingPerformanceInterval);
 }
 
-MainSoundscapeOSCSimComponent::~MainSoundscapeOSCSimComponent()
+MainSpaConSimComponent::~MainSpaConSimComponent()
 {
 
 }
 
-void MainSoundscapeOSCSimComponent::paint(juce::Graphics& g)
+void MainSpaConSimComponent::paint(juce::Graphics& g)
 {
     g.fillAll(getLookAndFeel().findColour(ResizableWindow::backgroundColourId));
 }
 
-void MainSoundscapeOSCSimComponent::resized()
+void MainSpaConSimComponent::resized()
 {
     auto safety = JUCEAppBasics::iOS_utils::getDeviceSafetyMargins();
     auto safeBounds = getLocalBounds();
@@ -183,7 +183,7 @@ void MainSoundscapeOSCSimComponent::resized()
             embeddedVisuBounds.getHeight()));
 }
 
-void MainSoundscapeOSCSimComponent::lookAndFeelChanged()
+void MainSpaConSimComponent::lookAndFeelChanged()
 {
     Component::lookAndFeelChanged();
 
@@ -197,7 +197,7 @@ void MainSoundscapeOSCSimComponent::lookAndFeelChanged()
     m_helpButton->setImages(NormalImage.get(), OverImage.get(), DownImage.get(), DisabledImage.get(), NormalOnImage.get(), OverOnImage.get(), DownOnImage.get(), DisabledOnImage.get());
 }
 
-void MainSoundscapeOSCSimComponent::HandleMessageData(NodeId nodeId, ProtocolId senderProtocolId, RemoteObjectIdentifier Id, const RemoteObjectMessageData& msgData)
+void MainSpaConSimComponent::HandleMessageData(NodeId nodeId, ProtocolId senderProtocolId, RemoteObjectIdentifier Id, const RemoteObjectMessageData& msgData)
 {
     ignoreUnused(nodeId);
     ignoreUnused(senderProtocolId);
@@ -207,7 +207,7 @@ void MainSoundscapeOSCSimComponent::HandleMessageData(NodeId nodeId, ProtocolId 
     m_bridgingPerformanceCounter++;
 }
 
-void MainSoundscapeOSCSimComponent::sliderValueChanged(Slider* slider)
+void MainSpaConSimComponent::sliderValueChanged(Slider* slider)
 {
     if (m_speedSlider.get() == slider)
     {
@@ -218,7 +218,7 @@ void MainSoundscapeOSCSimComponent::sliderValueChanged(Slider* slider)
     }
 }
 
-void MainSoundscapeOSCSimComponent::comboBoxChanged (ComboBox* comboBox)
+void MainSpaConSimComponent::comboBoxChanged (ComboBox* comboBox)
 {
     if (m_channelSimSelect.get() == comboBox)
     {
@@ -258,7 +258,7 @@ void MainSoundscapeOSCSimComponent::comboBoxChanged (ComboBox* comboBox)
     }
 }
 
-void MainSoundscapeOSCSimComponent::buttonClicked(JUCEAppBasics::SplitButtonComponent* button, std::uint64_t buttonId)
+void MainSpaConSimComponent::buttonClicked(JUCEAppBasics::SplitButtonComponent* button, std::uint64_t buttonId)
 {
     ignoreUnused(button);
 
@@ -279,7 +279,7 @@ void MainSoundscapeOSCSimComponent::buttonClicked(JUCEAppBasics::SplitButtonComp
     }
 }
 
-void MainSoundscapeOSCSimComponent::timerCallback()
+void MainSpaConSimComponent::timerCallback()
 {
     if (m_bridgingPerformanceInterval > 0)
     {
@@ -297,7 +297,7 @@ void MainSoundscapeOSCSimComponent::timerCallback()
     m_bridgingPerformanceCounter = 0;
 }
 
-int MainSoundscapeOSCSimComponent::getSummedUpHeight()
+int MainSpaConSimComponent::getSummedUpHeight()
 {
     return 13 * _rowHeight + 2 * _margin + m_simulationVisu->getHeight();
 }

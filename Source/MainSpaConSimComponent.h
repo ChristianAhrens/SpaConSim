@@ -1,6 +1,6 @@
 /* Copyright (c) 2021, Christian Ahrens
  *
- * This file is part of SoundscapeOSCSim <https://github.com/ChristianAhrens/SoundscapeOSCSim>
+ * This file is part of SpaConSim <https://github.com/ChristianAhrens/SpaConSim>
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License version 3.0 as published
@@ -26,14 +26,14 @@
 #include "../submodules/JUCE-AppBasics/Source/SplitButtonComponent.h"
 
 
-namespace SoundscapeOSCSim
+namespace SpaConSim
 {
 
 
 //==============================================================================
 /*
  */
-class MainSoundscapeOSCSimComponent :   public juce::Component,
+class MainSpaConSimComponent :   public juce::Component,
                                         public ProtocolBridgingWrapper::Listener,
                                         public Slider::Listener,
                                         public ComboBox::Listener,
@@ -41,8 +41,8 @@ class MainSoundscapeOSCSimComponent :   public juce::Component,
                                         public Timer
 {
 public:
-    MainSoundscapeOSCSimComponent();
-    ~MainSoundscapeOSCSimComponent() override;
+    MainSpaConSimComponent();
+    ~MainSpaConSimComponent() override;
 
     //==========================================================================
     void paint(juce::Graphics&) override;
@@ -148,7 +148,7 @@ private:
     const int _margin{ 5 };
     const int _width{ 320 };
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainSoundscapeOSCSimComponent)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainSpaConSimComponent)
 };
 
 };

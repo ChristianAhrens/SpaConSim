@@ -18,19 +18,19 @@
 
 #include <JuceHeader.h>
 
-#include "MainSoundscapeOSCSimComponent.h"
+#include "MainSpaConSimComponent.h"
 
 #include "../submodules/JUCE-AppBasics/Source/CustomLookAndFeel.h"
 
-namespace SoundscapeOSCSim
+namespace SpaConSim
 {
 
 //==============================================================================
-class SoundscapeOSCSimApplication : public JUCEApplication
+class SpaConSimApplication : public JUCEApplication
 {
 public:
     //==============================================================================
-    SoundscapeOSCSimApplication() {}
+    SpaConSimApplication() {}
 
     const String getApplicationName() override { return ProjectInfo::projectName; }
     const String getApplicationVersion() override { return ProjectInfo::versionString; }
@@ -109,7 +109,7 @@ public:
         */
 
     private:
-        MainSoundscapeOSCSimComponent      m_mainComponent;
+        MainSpaConSimComponent      m_mainComponent;
         JUCEAppBasics::CustomLookAndFeel   m_customlookAndFeel;
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainWindow)
@@ -123,4 +123,4 @@ private:
 
 //==============================================================================
 // This macro generates the main() routine that launches the app.
-START_JUCE_APPLICATION (SoundscapeOSCSim::SoundscapeOSCSimApplication)
+START_JUCE_APPLICATION (SpaConSim::SpaConSimApplication)

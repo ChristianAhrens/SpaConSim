@@ -4,7 +4,7 @@ cd ../../../
 # set external variables
 CodeSignCertName=$1 # e.g. "Developer ID Application: SomeIdentifier"
 NotarizationUser=$2 # appleid to use for notarization
-AppBundleId=$3 # app bundle id like "com.SomeIdentifier.SoundscapeOSCSim"
+AppBundleId=$3 # app bundle id like "com.SomeIdentifier.SpaConSim"
 
 echo "Using certificate $CodeSignCertName for codesigning."
 echo "Using AppleId $NotarizationUser and bundle name $AppBundleId for notarization."
@@ -12,11 +12,11 @@ echo "Using AppleId $NotarizationUser and bundle name $AppBundleId for notarizat
 # set convenience variables
 JUCEDir=/Applications/JUCE
 ProjucerPath="$JUCEDir"/Projucer.app/Contents/MacOS/Projucer
-JucerProjectPath=SoundscapeOSCSim.jucer
-XCodeProjectPath=Builds/MacOSX/SoundscapeOSCSim.xcodeproj
+JucerProjectPath=SpaConSim.jucer
+XCodeProjectPath=Builds/MacOSX/SpaConSim.xcodeproj
 AppBundlePath=Builds/MacOSX/build/Release
 CreateDmgPath=submodules/create-dmg/create-dmg
-DmgTargetPath=SoundscapeOSCSim.dmg
+DmgTargetPath=SpaConSim.dmg
 
 # export projucer project
 "$ProjucerPath" --resave "$JucerProjectPath"
