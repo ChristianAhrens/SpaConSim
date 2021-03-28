@@ -1,3 +1,3 @@
-SoundscapeOSCSim is a project designed to help testing, developing and debugging SoundscapeBridgeApp that can be found at https://github.com/ChristianAhrens/SoundscapeBridgeApp.
+SpaConSim is a PRIVATE open source project, designed to help testing, developing and debugging SpaConBridge that can be found at https://github.com/ChristianAhrens/SpaConBridge.
 
 It also might be useful to test OSC communication of d&b Soundscape systems with external applications and devices.
