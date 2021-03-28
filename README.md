@@ -1,7 +1,8 @@
 ![Showreel.001.png](Resources/Documentation/Showreel/Showreel.001.png "SpaConSim Headline Icons")
 
 SpaConSim is a PRIVATELY created and driven project.
-It was created to be a minimal tool to simulate the OSC message response behaviour of a d&b audiotechnik DS100 Soundscape signal bridge and was designed to help developing and testing of 3rd party software tools.
+
+It was created to be a minimal tool for simulation of the OSC message response behaviour of a d&b audiotechnik DS100 Soundscape signal bridge and aims at supporting development and testing of 3rd party software tools.
 
 See [LATEST RELEASE](../../releases/latest) for available binary packages.
 
@@ -21,7 +22,7 @@ The following objects are simulated:
 - Matrix Input Levelmeter pre Mute
 - Matrix Input Gain
 - Matrix Input Mute
-- Matrix Output Levelmeter pre Mute
+- Matrix Output Levelmeter post Mute
 - Matrix Output Gain
 - Matrix Output Mute
 
