@@ -128,6 +128,18 @@
                     file="submodules/RemoteProtocolBridgeCore/Source/ProcessingEngine/ProtocolProcessor/ProtocolProcessorBase.h"/>
             </GROUP>
             <GROUP id="{9D215695-DE2B-0FE0-E3C4-FCD0911E9150}" name="ObjectDataHandling">
+              <GROUP id="{49188BB0-821B-51E4-9526-46AAF3783137}" name="A2active_withValFilter">
+                <FILE id="CZ09BM" name="A2active_withValFilter.cpp" compile="1" resource="0"
+                      file="submodules/RemoteProtocolBridgeCore/Source/ProcessingEngine/ObjectDataHandling/A2active_withValFilter/A2active_withValFilter.cpp"/>
+                <FILE id="sMynYa" name="A2active_withValFilter.h" compile="0" resource="0"
+                      file="submodules/RemoteProtocolBridgeCore/Source/ProcessingEngine/ObjectDataHandling/A2active_withValFilter/A2active_withValFilter.h"/>
+              </GROUP>
+              <GROUP id="{09E05A78-A764-4E81-F2B8-4219B2505BB1}" name="A1active_withValFilter">
+                <FILE id="C0tZvg" name="A1active_withValFilter.cpp" compile="1" resource="0"
+                      file="submodules/RemoteProtocolBridgeCore/Source/ProcessingEngine/ObjectDataHandling/A1active_withValFilter/A1active_withValFilter.cpp"/>
+                <FILE id="XDmae0" name="A1active_withValFilter.h" compile="0" resource="0"
+                      file="submodules/RemoteProtocolBridgeCore/Source/ProcessingEngine/ObjectDataHandling/A1active_withValFilter/A1active_withValFilter.h"/>
+              </GROUP>
               <GROUP id="{6DA50019-6E9C-3300-A2C2-141649C287F6}" name="Mirror_dualA_withValFilter">
                 <FILE id="IH7CZM" name="Mirror_dualA_withValFilter.cpp" compile="1"
                       resource="0" file="submodules/RemoteProtocolBridgeCore/Source/ProcessingEngine/ObjectDataHandling/Mirror_dualA_withValFilter/Mirror_dualA_withValFilter.cpp"/>
