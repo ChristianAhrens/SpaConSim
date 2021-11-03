@@ -38,6 +38,10 @@
       <GROUP id="{ABDE5966-4366-3448-7A14-89E6D88C1E6A}" name="RemoteProtocolBridgeCore">
         <GROUP id="{EE8FD02C-2A93-7667-7AA3-654B457B9513}" name="Source">
           <GROUP id="{7505D729-3FE0-CE74-FCA2-50B13406A622}" name="ProcessingEngine">
+            <FILE id="QSyxgE" name="RemoteObjectValueCache.cpp" compile="1" resource="0"
+                  file="submodules/RemoteProtocolBridgeCore/Source/ProcessingEngine/RemoteObjectValueCache.cpp"/>
+            <FILE id="oHALBO" name="RemoteObjectValueCache.h" compile="0" resource="0"
+                  file="submodules/RemoteProtocolBridgeCore/Source/ProcessingEngine/RemoteObjectValueCache.h"/>
             <GROUP id="{825670AB-2C82-8B67-528D-93146C65627D}" name="ProtocolProcessor">
               <GROUP id="{23F4AD3F-3B97-DB5A-2725-C0D641092910}" name="RTTrPMProtocolProcessor">
                 <GROUP id="{149E70DC-0656-73FE-14AD-C4C1A8664BCB}" name="RTTrPMReceiver">
