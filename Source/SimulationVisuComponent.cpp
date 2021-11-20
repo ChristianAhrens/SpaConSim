@@ -26,11 +26,11 @@ namespace SpaConSim
 SimulationVisuComponent::SimulationVisuComponent()
 {
 	setSize(_width, _rowHeight * m_layoutRows);
+	setInterceptsMouseClicks(true, false);
 }
 
 SimulationVisuComponent::~SimulationVisuComponent()
 {
-
 }
 
 void SimulationVisuComponent::paint(juce::Graphics& g)
@@ -40,41 +40,51 @@ void SimulationVisuComponent::paint(juce::Graphics& g)
 
 void SimulationVisuComponent::resized()
 {
-    Grid grid;
-    grid.alignItems = Grid::AlignItems::center;
-    grid.alignContent = Grid::AlignContent::center;
-
-	for (int i = 0; i < _layoutColumns; i++)
-		grid.templateColumns.add(Grid::TrackInfo(1_fr));
-	for (int i = 0; i < m_layoutRows; i++)
-		grid.templateRows.add(Grid::TrackInfo(1_fr));
-
-	switch (m_currentVisibleType)
+	if (m_currentVisibleType == VT_MultiSoundObject)
 	{
-	case VT_SoundObject:
-		for (auto const& so : m_soundObjects)
-		{
-			grid.items.add(GridItem(so.second.get()));
-		}
-		break;
-	case VT_MatrixInput:
-		for (auto const& mi : m_matrixInputs)
-		{
-			grid.items.add(GridItem(mi.second.get()));
-		}
-		break;
-	case VT_MatrixOutput:
-		for (auto const& mo : m_matrixOutputs)
-		{
-			grid.items.add(GridItem(mo.second.get()));
-		}
-		break;
-	case VT_None:
-	default:
-		break;
+		jassert(m_multiSoundObject);
+		if (m_multiSoundObject)
+			m_multiSoundObject->setBounds(getLocalBounds());
+		return;
 	}
+	else
+	{
+		Grid grid;
+		grid.alignItems = Grid::AlignItems::center;
+		grid.alignContent = Grid::AlignContent::center;
 
-    grid.performLayout(getLocalBounds());
+		for (int i = 0; i < _layoutColumns; i++)
+			grid.templateColumns.add(Grid::TrackInfo(1_fr));
+		for (int i = 0; i < m_layoutRows; i++)
+			grid.templateRows.add(Grid::TrackInfo(1_fr));
+
+		switch (m_currentVisibleType)
+		{
+		case VT_SoundObject:
+			for (auto const& so : m_soundObjects)
+			{
+				grid.items.add(GridItem(so.second.get()));
+			}
+			break;
+		case VT_MatrixInput:
+			for (auto const& mi : m_matrixInputs)
+			{
+				grid.items.add(GridItem(mi.second.get()));
+			}
+			break;
+		case VT_MatrixOutput:
+			for (auto const& mo : m_matrixOutputs)
+			{
+				grid.items.add(GridItem(mo.second.get()));
+			}
+			break;
+		case VT_None:
+		default:
+			break;
+		}
+
+		grid.performLayout(getLocalBounds());
+	}
 }
 
 void SimulationVisuComponent::SetSimulationChannelCount(int channelCount)
@@ -127,15 +137,37 @@ void SimulationVisuComponent::SetSimulationChannelCount(int channelCount)
 		resizeReq = true;
 	}
 
+	if (m_currentVisibleType == VT_MultiSoundObject)
+	{
+		if (!m_multiSoundObject || m_multiSoundObject->currentSoundobjectCount() != channelCount)
+		{
+			m_multiSoundObject = std::make_unique<MultiSoundObjectComponent>(channelCount);
+			addAndMakeVisible(m_multiSoundObject.get());
+
+			resizeReq = true;
+		}
+	}
+
 	if (resizeReq)
 		resized();
 }
 
-void SimulationVisuComponent::SetVisibleType(VisibleType type)
+void SimulationVisuComponent::SetVisibleType(SimulationVisuComponent::VisibleType type)
 {
 	m_currentVisibleType = type;
 
+	if (m_currentVisibleType == VisibleType::VT_MultiSoundObject && !m_multiSoundObject)
+	{
+		m_multiSoundObject = std::make_unique<MultiSoundObjectComponent>();
+		addAndMakeVisible(m_multiSoundObject.get());
+	}
+
 	resized();
+}
+
+const SimulationVisuComponent::VisibleType& SimulationVisuComponent::GetVisibleType() const
+{
+	return m_currentVisibleType;
 }
 
 void SimulationVisuComponent::Clear()
@@ -151,6 +183,8 @@ void SimulationVisuComponent::Clear()
 	for (auto const& mo : m_matrixOutputs)
 		removeChildComponent(mo.second.get());
 	m_matrixOutputs.clear();
+
+	m_multiSoundObject.reset();
 }
 
 void SimulationVisuComponent::onSimulationUpdated(const std::map<RemoteObjectAddressing, std::map<RemoteObjectIdentifier, std::vector<float>>>& simulationValues)
@@ -164,35 +198,40 @@ void SimulationVisuComponent::onSimulationUpdated(const std::map<RemoteObjectAdd
 	float gainVal = 0.0f;
 	float muteVal = 0.0f;
 
+	std::map<int, std::pair<float, float>> multiSOSimulationValues;
+
 	for (auto const& simValue : simulationValues)
 	{
 		auto const& channel				= simValue.first._first;
 		auto const& record				= simValue.first._second;
 		auto const& remoteObjectsMap	= simValue.second;
 
+		xVal = 0.5f;
+		yVal = 0.5f;
+		rvVal = 0.0f;
+		spVal = 0.5f;
+		dmVal = 0.0f;
+
+		if (remoteObjectsMap.count(ROI_CoordinateMapping_SourcePosition_X) > 0 && !remoteObjectsMap.at(ROI_CoordinateMapping_SourcePosition_X).empty())
+		{
+			xVal = jmap(remoteObjectsMap.at(ROI_CoordinateMapping_SourcePosition_X).front(),
+				ProcessingEngineConfig::GetRemoteObjectRange(ROI_CoordinateMapping_SourcePosition_X).getStart(),
+				ProcessingEngineConfig::GetRemoteObjectRange(ROI_CoordinateMapping_SourcePosition_X).getEnd(), 0.0f, 1.0f);
+		}
+		if (remoteObjectsMap.count(ROI_CoordinateMapping_SourcePosition_Y) > 0 && !remoteObjectsMap.at(ROI_CoordinateMapping_SourcePosition_Y).empty())
+		{
+			yVal = jmap(remoteObjectsMap.at(ROI_CoordinateMapping_SourcePosition_Y).front(),
+				ProcessingEngineConfig::GetRemoteObjectRange(ROI_CoordinateMapping_SourcePosition_Y).getStart(),
+				ProcessingEngineConfig::GetRemoteObjectRange(ROI_CoordinateMapping_SourcePosition_Y).getEnd(), 0.0f, 1.0f);
+		}
+
+		if (channel != INVALID_ADDRESS_VALUE)
+			multiSOSimulationValues[channel] = std::make_pair(xVal, yVal);
+
 		if (m_soundObjects.count(channel) > 0)
 		{
-			xVal = 0.5f;
-			yVal = 0.5f;
-			rvVal = 0.0f;
-			spVal = 0.5f;
-			dmVal = 0.0f;
-
 			if (record == 1)
 			{
-				if (remoteObjectsMap.count(ROI_CoordinateMapping_SourcePosition_X) > 0 && !remoteObjectsMap.at(ROI_CoordinateMapping_SourcePosition_X).empty())
-				{
-					xVal = jmap(remoteObjectsMap.at(ROI_CoordinateMapping_SourcePosition_X).front(),
-						ProcessingEngineConfig::GetRemoteObjectRange(ROI_CoordinateMapping_SourcePosition_X).getStart(),
-						ProcessingEngineConfig::GetRemoteObjectRange(ROI_CoordinateMapping_SourcePosition_X).getEnd(), 0.0f, 1.0f);
-				}
-				if (remoteObjectsMap.count(ROI_CoordinateMapping_SourcePosition_Y) > 0 && !remoteObjectsMap.at(ROI_CoordinateMapping_SourcePosition_Y).empty())
-				{
-					yVal = jmap(remoteObjectsMap.at(ROI_CoordinateMapping_SourcePosition_Y).front(),
-						ProcessingEngineConfig::GetRemoteObjectRange(ROI_CoordinateMapping_SourcePosition_Y).getStart(),
-						ProcessingEngineConfig::GetRemoteObjectRange(ROI_CoordinateMapping_SourcePosition_Y).getEnd(), 0.0f, 1.0f);
-				}
-
 				m_soundObjects.at(channel)->updatePosValues(xVal, yVal);
 			}
 
@@ -283,6 +322,9 @@ void SimulationVisuComponent::onSimulationUpdated(const std::map<RemoteObjectAdd
 			}
 		}
 	}
+
+	if (m_multiSoundObject)
+		m_multiSoundObject->updatePosValues(multiSOSimulationValues);
 }
 
 }

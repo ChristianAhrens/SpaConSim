@@ -273,8 +273,16 @@ void MainSpaConSimComponent::buttonClicked(JUCEAppBasics::SplitButtonComponent* 
 
     if (m_simulationVisu)
     {
+        auto newVisibleType = m_simulationVisuTypeButtonIds[buttonId];
+        if (m_simulationVisu->GetVisibleType() == newVisibleType)
+        {
+            if (newVisibleType == SimulationVisuComponent::VT_SoundObject)
+                newVisibleType = SimulationVisuComponent::VT_MultiSoundObject;
+            else
+                return;
+        }
         m_simulationVisu->Clear();
-        m_simulationVisu->SetVisibleType(m_simulationVisuTypeButtonIds[buttonId]);
+        m_simulationVisu->SetVisibleType(newVisibleType);
         m_simulationVisu->SetSimulationChannelCount(chCntValue);
     }
 }

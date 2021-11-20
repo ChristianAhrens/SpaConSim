@@ -37,7 +37,8 @@ public:
         VT_None,
         VT_SoundObject,
         VT_MatrixInput,
-        VT_MatrixOutput
+        VT_MatrixOutput,
+        VT_MultiSoundObject,
     };
 
 public:
@@ -47,6 +48,7 @@ public:
     //==========================================================================
     void SetSimulationChannelCount(int channlCount);
     void SetVisibleType(VisibleType type);
+    const VisibleType& GetVisibleType() const;
     void Clear();
 
     //==========================================================================
@@ -212,6 +214,82 @@ private:
     std::map<int, std::unique_ptr<SimulationVisuComponent::MatrixIOComponent>>    m_matrixInputs;
     std::map<int, std::unique_ptr<SimulationVisuComponent::MatrixIOComponent>>    m_matrixOutputs;
 
+    //==========================================================================
+    class MultiSoundObjectComponent : public Component
+    {
+    public:
+        MultiSoundObjectComponent(int soundObjectCount = 1)
+        {
+            for(int i = 1; i<= soundObjectCount; i++)
+            {
+                m_posValues01[i] = std::make_pair(0.5f, 0.5f);
+            }
+        }
+
+        void updatePosValues(int objNo, float xVal01, float yVal01)
+        {
+            if (m_posValues01.count(objNo) <= 0)
+                return;
+
+            m_posValues01.at(objNo).first = xVal01;
+            m_posValues01.at(objNo).second = yVal01;
+
+            repaint();
+        }
+
+        void updatePosValues(std::map<int, std::pair<float, float>>& updatedValues)
+        {
+            m_posValues01 = updatedValues;
+
+            repaint();
+        }
+
+        void paint(juce::Graphics& g) override
+        {
+            auto xyPadArea = getLocalBounds().reduced(2);
+
+            // draw a slightly darker frame around the xy pad area
+            g.setColour(getLookAndFeel().findColour(TextEditor::outlineColourId).darker());
+            // xy pad rectangle
+            g.drawRect(xyPadArea);
+
+            for (auto const& posValue01 : m_posValues01)
+            {
+                auto const objNo = posValue01.first;
+                auto const objNoStr = String(objNo);
+                auto const& xVal01 = posValue01.second.first;
+                auto const& yVal01 = posValue01.second.second;
+
+                jassert(xVal01 >= 0.0f && xVal01 <= 1.0f);
+                jassert(yVal01 >= 0.0f && yVal01 <= 1.0f);
+
+                auto xRectPos = xyPadArea.getX() + (xyPadArea.getWidth() * xVal01);
+                auto yRectPos = xyPadArea.getBottom() - (xyPadArea.getHeight() * yVal01);
+
+                // Set a color variant based on the input number, so make the objects easier to tell from each other.
+                auto shade = Colour(juce::uint8(objNo * 111), juce::uint8(objNo * 222), juce::uint8(objNo * 333));
+                auto objColour = Desktop::getInstance().getDefaultLookAndFeel().findColour(Slider::thumbColourId).interpolatedWith(shade, 0.4f);
+                g.setColour(objColour);
+
+                // draw obj text at current crosshair line intersection
+                auto textRect = juce::Rectangle<int>(xRectPos + 2, yRectPos + 2, 24, 8);
+                g.drawText(objNoStr, textRect, Justification::centredLeft);
+
+                //xy crosshair lines
+                g.drawLine(xRectPos, xyPadArea.getY(), xRectPos, xyPadArea.getBottom());
+                g.drawLine(xyPadArea.getX(), yRectPos, xyPadArea.getWidth(), yRectPos);
+            }
+        }
+
+        int currentSoundobjectCount()
+        {
+            return static_cast<int>(m_posValues01.size());
+        }
+
+        std::map<int, std::pair<float, float>>  m_posValues01;
+    };
+    std::unique_ptr<SimulationVisuComponent::MultiSoundObjectComponent>    m_multiSoundObject;
+
     const int _width{ 310 };
     const int _rowHeight{ 40 };
     const int _layoutColumns{ 8 };
@@ -219,7 +297,6 @@ private:
     String  m_displayName{ "None" };
     VisibleType m_currentVisibleType{ VT_None };
     
-
 };
 
 };
