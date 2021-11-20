@@ -97,6 +97,10 @@
                       file="submodules/RemoteProtocolBridgeCore/Source/ProcessingEngine/ProtocolProcessor/RTTrPMProtocolProcessor/RTTrPMProtocolProcessor.h"/>
               </GROUP>
               <GROUP id="{E7DB0F3B-32E1-8C7A-71B2-AF4A75C59FD6}" name="OSCProtocolProcessor">
+                <FILE id="tH5Rzb" name="ADMOSCProtocolProcessor.cpp" compile="1" resource="0"
+                      file="submodules/RemoteProtocolBridgeCore/Source/ProcessingEngine/ProtocolProcessor/OSCProtocolProcessor/ADMOSCProtocolProcessor.cpp"/>
+                <FILE id="AxGuGj" name="ADMOSCProtocolProcessor.h" compile="0" resource="0"
+                      file="submodules/RemoteProtocolBridgeCore/Source/ProcessingEngine/ProtocolProcessor/OSCProtocolProcessor/ADMOSCProtocolProcessor.h"/>
                 <FILE id="vvRvx4" name="OSCProtocolProcessor.cpp" compile="1" resource="0"
                       file="submodules/RemoteProtocolBridgeCore/Source/ProcessingEngine/ProtocolProcessor/OSCProtocolProcessor/OSCProtocolProcessor.cpp"/>
                 <FILE id="XlgJMQ" name="OSCProtocolProcessor.h" compile="0" resource="0"
