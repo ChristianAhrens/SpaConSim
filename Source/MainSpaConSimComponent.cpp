@@ -284,6 +284,8 @@ void MainSpaConSimComponent::buttonClicked(JUCEAppBasics::SplitButtonComponent* 
         m_simulationVisu->Clear();
         m_simulationVisu->SetVisibleType(newVisibleType);
         m_simulationVisu->SetSimulationChannelCount(chCntValue);
+        
+        resized();
     }
 }
 
