@@ -76,10 +76,10 @@ MainSpaConSimComponent::MainSpaConSimComponent()
     m_localSystemInterfacesInfoLabel = std::make_unique<Label>("localSystemInterfacesInfo", "- System's main IP is " + juce::IPAddress::getLocalAddress().toString());
     addAndMakeVisible(m_localSystemInterfacesInfoLabel.get());
 
-    m_listeningPortAnnouncedInfoLabel = std::make_unique<Label>("listeningPortAnnouncedInfo", "- Listening on port " + String(RX_PORT_DS100_HOST));
+    m_listeningPortAnnouncedInfoLabel = std::make_unique<Label>("listeningPortAnnouncedInfo", "- Listening on port " + String(LISTENING_PORT));
     addAndMakeVisible(m_listeningPortAnnouncedInfoLabel.get());
 
-    m_clientRemotePortInfoLabel = std::make_unique<Label>("clientRemotePortInfo", "- Sending data replies to remote client port " + String(RX_PORT_DS100_DEVICE));
+    m_clientRemotePortInfoLabel = std::make_unique<Label>("clientRemotePortInfo", "- Sending data replies to remote client port " + String(REPLY_TO_PORT));
     addAndMakeVisible(m_clientRemotePortInfoLabel.get());
 
     m_sectionLine2 = std::make_unique<WhiteLineComponent>(WhiteLineComponent::vAlign::Top);

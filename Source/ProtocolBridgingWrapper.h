@@ -28,8 +28,8 @@
 namespace SpaConSim
 {
 
-static constexpr int RX_PORT_DS100_DEVICE = 50010;		//< UDP port which the DS100 is listening to for OSC
-static constexpr int RX_PORT_DS100_HOST = 50011;		//< UDP port to which the DS100 will send OSC replies
+static constexpr int LISTENING_PORT = 50010;		//< UDP port which the DS100 Sim is listening to for OSC
+static constexpr int REPLY_TO_PORT = 50011;		//< UDP port to which the DS100 Sim will send OSC replies
 
 
 /**
